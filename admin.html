@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CU Roofing — Admin</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <style>
+    body { background: #f0f2f5; font-family: Arial, sans-serif; }
+
+    /* ── Login ── */
+    #loginView {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh;
+    }
+    .login-card {
+      background: #fff; border-radius: 10px; padding: 40px 36px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10); width: 100%; max-width: 400px;
+    }
+    .login-card h2 { color: #F96D00; font-weight: 700; margin-bottom: 4px; }
+    .login-card .subtitle { color: #888; font-size: 13px; margin-bottom: 28px; }
+    .login-card .form-control { border-radius: 4px; font-size: 14px; }
+    .login-card .form-control:focus { border-color: #F96D00; box-shadow: 0 0 0 2px rgba(249,109,0,0.15); }
+    .btn-orange { background: #F96D00; color: #fff; font-weight: 600; border: none; border-radius: 4px; }
+    .btn-orange:hover { background: #d95d00; color: #fff; }
+    .btn-orange:disabled { background: #ccc; }
+    #loginError { font-size: 13px; margin-top: 12px; }
+
+    /* ── Dashboard ── */
+    #dashboardView { display: none; }
+    .topbar {
+      background: #1a1a1a; color: #fff; padding: 14px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar .brand { font-size: 18px; font-weight: 700; color: #F96D00; }
+    .topbar .admin-info { font-size: 13px; color: #aaa; }
+    .topbar .btn-logout {
+      font-size: 13px; padding: 5px 14px; border-radius: 4px;
+      background: transparent; border: 1px solid #555; color: #ccc;
+      cursor: pointer; margin-left: 14px;
+    }
+    .topbar .btn-logout:hover { border-color: #F96D00; color: #F96D00; }
+
+    .dashboard-body { padding: 28px; }
+    .stats-row { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+    .stat-card {
+      background: #fff; border-radius: 8px; padding: 18px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); min-width: 130px; flex: 1;
+      border-left: 4px solid #eee;
+    }
+    .stat-card.total  { border-left-color: #6c757d; }
+    .stat-card.new    { border-left-color: #F96D00; }
+    .stat-card.contacted  { border-left-color: #007bff; }
+    .stat-card.completed  { border-left-color: #28a745; }
+    .stat-card .stat-num  { font-size: 28px; font-weight: 700; color: #1a1a1a; }
+    .stat-card .stat-label { font-size: 12px; color: #888; margin-top: 2px; }
+
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+    .filter-bar .btn-filter {
+      font-size: 13px; padding: 5px 16px; border-radius: 20px;
+      border: 1px solid #ddd; background: #fff; cursor: pointer; color: #555;
+    }
+    .filter-bar .btn-filter.active { background: #F96D00; color: #fff; border-color: #F96D00; }
+    .filter-bar .search-input {
+      margin-left: auto; font-size: 13px; padding: 5px 14px;
+      border-radius: 20px; border: 1px solid #ddd; outline: none; width: 220px;
+    }
+    .filter-bar .search-input:focus { border-color: #F96D00; }
+
+    .table-card {
+      background: #fff; border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden;
+    }
+    .table-card table { margin: 0; font-size: 13px; }
+    .table-card thead th {
+      background: #f8f9fa; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; color: #666;
+      border-bottom: 2px solid #eee; padding: 12px 14px; white-space: nowrap;
+    }
+    .table-card tbody td { padding: 12px 14px; vertical-align: middle; border-bottom: 1px solid #f0f0f0; }
+    .table-card tbody tr:last-child td { border-bottom: none; }
+    .table-card tbody tr:hover { background: #fafafa; }
+
+    .badge-status {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      padding: 3px 10px; border-radius: 12px; white-space: nowrap;
+    }
+    .badge-new       { background: #fff3e8; color: #F96D00; }
+    .badge-contacted { background: #e8f0ff; color: #007bff; }
+    .badge-completed { background: #e8f5ec; color: #28a745; }
+
+    .status-select {
+      font-size: 12px; padding: 3px 8px; border-radius: 4px;
+      border: 1px solid #ddd; cursor: pointer; background: #fff;
+    }
+    .status-select:focus { outline: none; border-color: #F96D00; }
+
+    .msg-cell { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+    .empty-state { text-align: center; padding: 48px; color: #aaa; font-size: 14px; }
+
+    /* Detail modal */
+    .modal-header { background: #1a1a1a; color: #fff; border-radius: 8px 8px 0 0; }
+    .modal-title { color: #F96D00; font-weight: 700; }
+    .modal-header .close { color: #fff; opacity: 0.7; }
+    .detail-row { display: flex; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-label { width: 110px; font-weight: 600; color: #666; flex-shrink: 0; }
+    .detail-value { color: #333; flex: 1; word-break: break-word; }
+
+    #loadingSpinner { text-align: center; padding: 40px; color: #aaa; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<!-- ── Login View ─────────────────────────────────────────── -->
+<div id="loginView">
+  <div class="login-card">
+    <h2>CU Roofing</h2>
+    <p class="subtitle">Admin Portal — sign in to view inquiries</p>
+    <div class="form-group">
+      <label style="font-size:13px;font-weight:600;color:#444;">Email</label>
+      <input type="email" id="loginEmail" class="form-control" placeholder="admin@example.com" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label style="font-size:13px;font-weight:600;color:#444;">Password</label>
+      <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <div id="loginError" class="text-danger" style="display:none;"></div>
+    <button id="loginBtn" class="btn btn-orange btn-block mt-3" style="padding:10px;">Sign In</button>
+  </div>
+</div>
+
+<!-- ── Dashboard View ─────────────────────────────────────── -->
+<div id="dashboardView">
+  <div class="topbar">
+    <span class="brand">CU Roofing — Admin</span>
+    <div style="display:flex;align-items:center;">
+      <span class="admin-info" id="adminEmail"></span>
+      <button class="btn-logout" id="logoutBtn">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="dashboard-body">
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card total">
+        <div class="stat-num" id="statTotal">—</div>
+        <div class="stat-label">Total Inquiries</div>
+      </div>
+      <div class="stat-card new">
+        <div class="stat-num" id="statNew">—</div>
+        <div class="stat-label">New</div>
+      </div>
+      <div class="stat-card contacted">
+        <div class="stat-num" id="statContacted">—</div>
+        <div class="stat-label">Contacted</div>
+      </div>
+      <div class="stat-card completed">
+        <div class="stat-num" id="statCompleted">—</div>
+        <div class="stat-label">Completed</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <button class="btn-filter active" data-filter="all">All</button>
+      <button class="btn-filter" data-filter="new">New</button>
+      <button class="btn-filter" data-filter="contacted">Contacted</button>
+      <button class="btn-filter" data-filter="completed">Completed</button>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search name, phone, email…">
+      <button id="refreshBtn" title="Refresh" style="margin-left:8px;background:#fff;border:1px solid #ddd;border-radius:20px;padding:5px 14px;font-size:13px;cursor:pointer;color:#555;">&#8635; Refresh</button>
+      <button id="exportBtn" title="Export CSV" style="background:#fff;border:1px solid #ddd;border-radius:20px;padding:5px 14px;font-size:13px;cursor:pointer;color:#555;">&#8615; Export CSV</button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <div id="loadingSpinner">Loading inquiries…</div>
+      <div id="tableWrap" style="display:none;overflow-x:auto;">
+        <table class="table" id="inquiriesTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Message</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="inquiriesBody"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState" style="display:none;">No inquiries found.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Detail Modal ───────────────────────────────────────── -->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="border-radius:8px;overflow:hidden;">
+      <div class="modal-header">
+        <h5 class="modal-title">Inquiry Details</h5>
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <div class="modal-body" id="detailBody" style="padding:24px;"></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  // ── Config — fill these in from Supabase Project Settings → API ──
+  const SUPABASE_URL  = 'YOUR_SUPABASE_URL';
+  const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+  // ─────────────────────────────────────────────────────────────────
+
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  let allInquiries = [];
+  let activeFilter = 'all';
+
+  // ── Auth ──────────────────────────────────────────────────────────
+  async function checkSession() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) showDashboard(session.user);
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errEl    = document.getElementById('loginError');
+    const btn      = document.getElementById('loginBtn');
+
+    errEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Signing in…';
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) {
+      errEl.textContent = error.message;
+      errEl.style.display = 'block';
+    } else {
+      showDashboard(data.user);
+    }
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  });
+
+  document.getElementById('loginPassword').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('loginBtn').click();
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await sb.auth.signOut();
+    document.getElementById('dashboardView').style.display = 'none';
+    document.getElementById('loginView').style.display    = 'flex';
+    document.getElementById('loginPassword').value = '';
+  });
+
+  function showDashboard(user) {
+    document.getElementById('loginView').style.display    = 'none';
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('adminEmail').textContent = user.email;
+    loadInquiries();
+  }
+
+  // ── Data ──────────────────────────────────────────────────────────
+  async function loadInquiries() {
+    document.getElementById('loadingSpinner').style.display = 'block';
+    document.getElementById('tableWrap').style.display      = 'none';
+
+    const { data, error } = await sb
+      .from('inquiries')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    document.getElementById('loadingSpinner').style.display = 'none';
+    document.getElementById('tableWrap').style.display      = 'block';
+
+    if (error) {
+      alert('Failed to load inquiries: ' + error.message);
+      return;
+    }
+
+    allInquiries = data || [];
+    updateStats();
+    renderTable();
+  }
+
+  function updateStats() {
+    document.getElementById('statTotal').textContent     = allInquiries.length;
+    document.getElementById('statNew').textContent       = allInquiries.filter(r => r.status === 'new').length;
+    document.getElementById('statContacted').textContent = allInquiries.filter(r => r.status === 'contacted').length;
+    document.getElementById('statCompleted').textContent = allInquiries.filter(r => r.status === 'completed').length;
+  }
+
+  function renderTable() {
+    const search  = document.getElementById('searchInput').value.toLowerCase();
+    const tbody   = document.getElementById('inquiriesBody');
+    const emptyEl = document.getElementById('emptyState');
+
+    let rows = allInquiries.filter(r => {
+      if (activeFilter !== 'all' && r.status !== activeFilter) return false;
+      if (search) {
+        const hay = [r.name, r.phone, r.email, r.city, r.address].join(' ').toLowerCase();
+        if (!hay.includes(search)) return false;
+      }
+      return true;
+    });
+
+    tbody.innerHTML = '';
+
+    if (rows.length === 0) {
+      emptyEl.style.display = 'block';
+      return;
+    }
+    emptyEl.style.display = 'none';
+
+    rows.forEach(r => {
+      const date    = new Date(r.created_at).toLocaleString('en-CA', { dateStyle: 'medium', timeStyle: 'short' });
+      const address = [r.address, r.city, r.province, r.postcode].filter(Boolean).join(', ') || '—';
+      const phone   = r.phone ? r.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3') : '—';
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="white-space:nowrap;color:#888;">${date}</td>
+        <td style="font-weight:600;">${esc(r.name)}</td>
+        <td><a href="tel:${r.phone}" style="color:#333;">${phone}</a></td>
+        <td>${r.email ? `<a href="mailto:${esc(r.email)}" style="color:#333;">${esc(r.email)}</a>` : '<span style="color:#bbb;">—</span>'}</td>
+        <td style="font-size:12px;color:#666;">${esc(address)}</td>
+        <td class="msg-cell" title="${esc(r.message || '')}">${esc(r.message || '—')}</td>
+        <td>
+          <select class="status-select" data-id="${r.id}" data-current="${r.status}">
+            <option value="new"       ${r.status==='new'       ? 'selected':''}>New</option>
+            <option value="contacted" ${r.status==='contacted' ? 'selected':''}>Contacted</option>
+            <option value="completed" ${r.status==='completed' ? 'selected':''}>Completed</option>
+          </select>
+        </td>`;
+
+      // Click row (not status dropdown) to open detail modal
+      tr.querySelectorAll('td:not(:last-child)').forEach(td => {
+        td.style.cursor = 'pointer';
+        td.addEventListener('click', () => openDetail(r));
+      });
+
+      tbody.appendChild(tr);
+    });
+
+    // Status change
+    tbody.querySelectorAll('.status-select').forEach(sel => {
+      sel.addEventListener('change', async function () {
+        const id     = this.dataset.id;
+        const status = this.value;
+        const { error } = await sb.from('inquiries').update({ status }).eq('id', id);
+        if (error) {
+          alert('Update failed: ' + error.message);
+          this.value = this.dataset.current;
+          return;
+        }
+        const rec = allInquiries.find(r => r.id === id);
+        if (rec) rec.status = status;
+        this.dataset.current = status;
+        updateStats();
+
+        // Update badge color inline via parent row highlight
+        const badge = this.closest('tr').querySelector('.badge-status');
+        if (badge) {
+          badge.className = `badge-status badge-${status}`;
+          badge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+        }
+      });
+    });
+  }
+
+  // ── Detail Modal ──────────────────────────────────────────────────
+  function openDetail(r) {
+    const date    = new Date(r.created_at).toLocaleString('en-CA', { dateStyle: 'long', timeStyle: 'short' });
+    const phone   = r.phone ? r.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3') : '—';
+    const address = [r.address, r.city, r.province, r.postcode].filter(Boolean).join(', ') || '—';
+
+    document.getElementById('detailBody').innerHTML = `
+      <div class="detail-row"><span class="detail-label">Submitted</span><span class="detail-value">${date}</span></div>
+      <div class="detail-row"><span class="detail-label">Name</span><span class="detail-value">${esc(r.name)}</span></div>
+      <div class="detail-row"><span class="detail-label">Phone</span><span class="detail-value"><a href="tel:${r.phone}">${phone}</a></span></div>
+      <div class="detail-row"><span class="detail-label">Email</span><span class="detail-value">${r.email ? `<a href="mailto:${esc(r.email)}">${esc(r.email)}</a>` : '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Address</span><span class="detail-value">${esc(address)}</span></div>
+      <div class="detail-row"><span class="detail-label">Status</span><span class="detail-value"><span class="badge-status badge-${r.status}">${r.status}</span></span></div>
+      <div class="detail-row"><span class="detail-label">Message</span><span class="detail-value" style="white-space:pre-wrap;">${esc(r.message || '—')}</span></div>`;
+
+    $('#detailModal').modal('show');
+  }
+
+  // ── Filters & Search ──────────────────────────────────────────────
+  document.querySelectorAll('.btn-filter').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      activeFilter = this.dataset.filter;
+      renderTable();
+    });
+  });
+
+  document.getElementById('searchInput').addEventListener('input', renderTable);
+
+  // ── Helpers ───────────────────────────────────────────────────────
+  function esc(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Refresh ───────────────────────────────────────────────────────
+  document.getElementById('refreshBtn').addEventListener('click', loadInquiries);
+
+  // ── Export CSV ────────────────────────────────────────────────────
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const headers = ['Date', 'Name', 'Phone', 'Email', 'Address', 'City', 'Province', 'Postcode', 'Message', 'Status'];
+    const rows = allInquiries.map(r => [
+      new Date(r.created_at).toLocaleString('en-CA'),
+      r.name, r.phone, r.email || '',
+      r.address || '', r.city || '', r.province || '', r.postcode || '',
+      (r.message || '').replace(/\n/g, ' '),
+      r.status,
+    ].map(v => `"${String(v).replace(/"/g, '""')}"`));
+
+    const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url;
+    a.download = `cu-roofing-inquiries-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // ── Init ──────────────────────────────────────────────────────────
+  checkSession();
+</script>
+</body>
+</html>
