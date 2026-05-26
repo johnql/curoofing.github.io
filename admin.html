@@ -227,9 +227,9 @@
   let activeFilter = 'all';
 
   // ── Auth ──────────────────────────────────────────────────────────
-  async function checkSession() {
-    const { data: { session } } = await sb.auth.getSession();
-    if (session) showDashboard(session.user);
+  function checkSession() {
+    const savedUser = sessionStorage.getItem('admin_user');
+    if (savedUser) showDashboard(savedUser);
   }
 
   document.getElementById('loginBtn').addEventListener('click', async () => {
@@ -242,12 +242,17 @@
     btn.disabled = true;
     btn.textContent = 'Signing in…';
 
-    const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) {
-      errEl.textContent = error.message;
+    const { data: valid, error } = await sb.rpc('check_admin_login', {
+      p_username: email,
+      p_password: password,
+    });
+
+    if (error || !valid) {
+      errEl.textContent = 'Invalid email or password.';
       errEl.style.display = 'block';
     } else {
-      showDashboard(data.user);
+      sessionStorage.setItem('admin_user', email);
+      showDashboard(email);
     }
     btn.disabled = false;
     btn.textContent = 'Sign In';
@@ -257,17 +262,17 @@
     if (e.key === 'Enter') document.getElementById('loginBtn').click();
   });
 
-  document.getElementById('logoutBtn').addEventListener('click', async () => {
-    await sb.auth.signOut();
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem('admin_user');
     document.getElementById('dashboardView').style.display = 'none';
     document.getElementById('loginView').style.display    = 'flex';
     document.getElementById('loginPassword').value = '';
   });
 
-  function showDashboard(user) {
+  function showDashboard(email) {
     document.getElementById('loginView').style.display    = 'none';
     document.getElementById('dashboardView').style.display = 'block';
-    document.getElementById('adminEmail').textContent = user.email;
+    document.getElementById('adminEmail').textContent = email;
     loadInquiries();
   }
 

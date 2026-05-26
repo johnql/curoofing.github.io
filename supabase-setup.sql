@@ -23,12 +23,12 @@ CREATE TABLE IF NOT EXISTS inquiries (
 -- Restrict direct public access; the API uses the service role key
 ALTER TABLE inquiries ENABLE ROW LEVEL SECURITY;
 
--- Admin policies: authenticated users (logged-in admins) can read and update
+-- Admin policies: allow anon role (used by admin.html) to read and update
 CREATE POLICY "admin_select" ON inquiries
-  FOR SELECT TO authenticated USING (true);
+  FOR SELECT TO anon USING (true);
 
 CREATE POLICY "admin_update" ON inquiries
-  FOR UPDATE TO authenticated USING (true) WITH CHECK (true);
+  FOR UPDATE TO anon USING (true) WITH CHECK (true);
 
 -- ── Admin user setup ──────────────────────────────────────────
 -- After running this file, create your admin account in Supabase:
@@ -50,3 +50,19 @@ ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 INSERT INTO users (username, password)
 VALUES ('curoofing.ca@gmail.com', 'cur+pwadmin')
 ON CONFLICT (username) DO NOTHING;
+
+-- RPC function called by admin.html to verify credentials
+-- SECURITY DEFINER allows it to read the users table using the anon key
+CREATE OR REPLACE FUNCTION check_admin_login(p_username text, p_password text)
+RETURNS boolean
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM users
+    WHERE username = p_username AND password = p_password
+  );
+$$;
+
+GRANT EXECUTE ON FUNCTION check_admin_login(text, text) TO anon;
