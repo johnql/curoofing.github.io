@@ -34,3 +34,25 @@ CREATE POLICY "admin_update" ON inquiries
 -- After running this file, create your admin account in Supabase:
 -- Authentication → Users → Add user
 -- Use a strong password. This is the login for admin.html.
+
+-- ── Users table (admin credentials) ──────────────────────────
+-- Requires pgcrypto extension for bcrypt password hashing
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE TABLE IF NOT EXISTS users (
+  id            uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at    timestamptz DEFAULT now() NOT NULL,
+  username      text        NOT NULL UNIQUE,
+  password_hash text        NOT NULL
+);
+
+-- RLS: no public access; only service role can read this table
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+
+-- Seed admin account (password stored as bcrypt hash)
+INSERT INTO users (username, password_hash)
+VALUES (
+  'curoofing.ca@gmail.com',
+  crypt('cur+pwadmin', gen_salt('bf'))
+)
+ON CONFLICT (username) DO NOTHING;
