@@ -1,6 +1,5 @@
 const handler = require('../api/here-geocode');
 
-const ONTARIO_BBOX = 'bbox:-95.17,41.65,-74.33,56.87';
 
 function makeReq(query = {}) {
   return { method: 'GET', query };
@@ -44,19 +43,19 @@ describe('here-geocode handler', () => {
     expect(res._body).toMatchObject({ error: expect.any(String) });
   });
 
-  test('restricts geocoding to Ontario bounding box', async () => {
+  test('restricts geocoding to Canada (countryCode:CAN)', async () => {
     global.fetch.mockResolvedValue({ json: async () => ({ items: [] }) });
     const res = makeRes();
     await handler(makeReq({ q: '123 Main St Toronto ON' }), res);
     const calledUrl = global.fetch.mock.calls[0][0];
-    expect(calledUrl).toContain(ONTARIO_BBOX);
+    expect(calledUrl).toContain('countryCode:CAN');
   });
 
-  test('does not use countryCode:CAN (bbox is the sole geographic filter)', async () => {
+  test('does not use bbox (geocode API only supports countryCode for in=)', async () => {
     global.fetch.mockResolvedValue({ json: async () => ({ items: [] }) });
     await handler(makeReq({ q: 'test' }), makeRes());
     const calledUrl = global.fetch.mock.calls[0][0];
-    expect(calledUrl).not.toContain('countryCode:CAN');
+    expect(calledUrl).not.toContain('bbox');
   });
 
   test('passes HERE geocode items through to client', async () => {

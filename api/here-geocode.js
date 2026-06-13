@@ -11,10 +11,11 @@ module.exports = async function handler(req, res) {
   if (!key) return res.status(500).json({ error: 'HERE_API_KEY not configured' });
 
   try {
+    // Geocode API only accepts countryCode for 'in', not bbox
     const url = 'https://geocode.search.hereapi.com/v1/geocode'
       + '?q='    + encodeURIComponent(q)
       + '&apiKey=' + key
-      + '&in=bbox:-95.17,41.65,-74.33,56.87';
+      + '&in=countryCode:CAN';
 
     const r = await fetch(url, { signal: AbortSignal.timeout(8000) });
     const d = await r.json();

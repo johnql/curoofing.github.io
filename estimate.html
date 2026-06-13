@@ -1068,9 +1068,9 @@
         return;
       }
       dd.innerHTML = hereSuggestions.map(function(item, i) {
-        var parts = item.title.split(',');
-        var main  = parts[0] || item.title;
-        var sub   = parts.slice(1).join(',').trim();
+        var a    = item.address || {};
+        var main = [a.houseNumber, a.street].filter(Boolean).join(' ') || item.title;
+        var sub  = [a.city, a.stateCode, a.postalCode].filter(Boolean).join(', ');
         return '<div class="here-item" data-i="' + i + '" onmousedown="hereSelect(' + i + ')">'
           + '<div class="hi-main">' + main + '</div>'
           + (sub ? '<div class="hi-sub">' + sub + '</div>' : '')
@@ -1082,8 +1082,11 @@
     function hereSelect(idx) {
       var item = hereSuggestions[idx];
       if (!item) return;
-      document.getElementById('l_address').value = item.title;
-      S.address = item.title;
+      // address.label is the proper format ("123 King St, Toronto, ON M5H, Canada")
+      // item.title is HERE's reversed breadcrumb — unusable for geocoding
+      var label = (item.address && item.address.label) ? item.address.label : item.title;
+      document.getElementById('l_address').value = label;
+      S.address = label;
       hereCloseDd();
       if (item.position) {
         S.lat = item.position.lat;
@@ -1093,7 +1096,7 @@
         fetchPropData(S.address, S.lat, S.lng);
       } else {
         setAddrStatus('loading', 'Looking up address…');
-        hereGeocode(item.title);
+        hereGeocode(label);
       }
     }
 
