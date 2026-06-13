@@ -1150,6 +1150,7 @@
     async function hereGeocode(addr) {
       try {
         var r = await fetch('/api/here-geocode?q=' + encodeURIComponent(addr));
+        if (!r.ok) throw new Error('api-error');
         var d = await r.json();
         var pos = (d.items || [])[0]?.position;
         if (pos) {
@@ -1160,10 +1161,11 @@
           fetchPropData(S.address || addr, S.lat, S.lng);
         } else {
           S.addrConfirmed = false;
-          setAddrStatus('err', 'Address not found — please select from the list');
+          setAddrStatus('err', 'Address not found in Ontario — check the spelling or select from the list');
         }
       } catch(e) {
-        setAddrStatus('err', 'Address not found — please select from the list');
+        S.addrConfirmed = false;
+        setAddrStatus('err', 'Address lookup unavailable — please try again');
       }
     }
 
