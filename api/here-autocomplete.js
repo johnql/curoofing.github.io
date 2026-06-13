@@ -11,12 +11,11 @@ module.exports = async function handler(req, res) {
   if (!key) return res.status(500).json({ error: 'HERE_API_KEY not configured' });
 
   try {
-    // bbox restricts results to Ontario (west,south,east,north); at biases ranking toward GTA
+    // bbox restricts results to Ontario; at= is mutually exclusive with in=bbox so omitted
     const url = 'https://autocomplete.search.hereapi.com/v1/autocomplete'
       + '?q='    + encodeURIComponent(q)
       + '&apiKey=' + key
       + '&in=bbox:-95.17,41.65,-74.33,56.87'
-      + '&at=43.70,-79.40'
       + '&limit=5&lang=en';
 
     const r = await fetch(url, { signal: AbortSignal.timeout(8000) });

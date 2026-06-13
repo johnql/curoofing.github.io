@@ -60,11 +60,11 @@ describe('here-autocomplete handler', () => {
     expect(calledUrl).not.toContain('countryCode:CAN');
   });
 
-  test('biases results toward GTA', async () => {
+  test('does not include at= (mutually exclusive with in=bbox per HERE API)', async () => {
     global.fetch.mockResolvedValue({ json: async () => ({ items: [] }) });
     await handler(makeReq({ q: 'King St' }), makeRes());
     const calledUrl = global.fetch.mock.calls[0][0];
-    expect(calledUrl).toContain(GTA_BIAS);
+    expect(calledUrl).not.toContain('at=');
   });
 
   test('limits suggestions to 5 results', async () => {
