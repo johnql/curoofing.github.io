@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Free Roofing Estimate | CU Roofing — GTA Roofing Contractor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Get an instant roofing cost estimate for your GTA home. Enter your address and choose your options to receive a detailed quote in under 2 minutes. No obligation.">
+    <meta name="keywords" content="roofing estimate Toronto, free roof quote GTA, roofing cost calculator Toronto, roof replacement cost GTA">
+    <link rel="canonical" href="https://curoofing.ca/estimate.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Free Roofing Estimate | CU Roofing — GTA">
+    <meta property="og:description" content="Instant roofing cost estimate for your GTA home in under 2 minutes. No obligation.">
+    <meta property="og:url" content="https://curoofing.ca/estimate.html">
+    <meta property="og:image" content="https://curoofing.ca/images/curoofing_logo2.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Roofing Estimate | CU Roofing">
+    <meta name="twitter:description" content="Instant roofing cost estimate for your GTA home. No obligation.">
+    <meta name="twitter:image" content="https://curoofing.ca/images/curoofing_logo2.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="./css/animate.css">
+    <link rel="stylesheet" href="./css/owl.carousel.min.css">
+    <link rel="stylesheet" href="./css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="./css/magnific-popup.css">
+    <link rel="stylesheet" href="./css/aos.css">
+    <link rel="stylesheet" href="./css/ionicons.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="./css/jquery.timepicker.css">
+    <link rel="stylesheet" href="./css/flaticon.css">
+    <link rel="stylesheet" href="./css/icomoon.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-662236685"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-662236685');
+    </script>
+
+
+    <style>
+      :root { --ep:#F96D00; --ep-light:#fff3e8; --ep-dark:#1a1a1a; }
+
+      .estimator-section { background:#f4f6f9; padding:50px 0 100px; }
+
+      /* ── Progress bar ─────────────────────────────── */
+      .wizard-progress { display:flex; align-items:flex-start; margin-bottom:28px; }
+      .wz-step  { display:flex; flex-direction:column; align-items:center; flex:0 0 auto; }
+      .wz-circle{ width:38px;height:38px;border-radius:50%;background:#dee2e6;color:#999;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;transition:all .25s; }
+      .wz-step.active .wz-circle { background:var(--ep);color:#fff;box-shadow:0 0 0 4px rgba(249,109,0,.18); }
+      .wz-step.done   .wz-circle { background:#28a745;color:#fff; }
+      .wz-label { font-size:11px;margin-top:5px;color:#aaa;white-space:nowrap; }
+      .wz-step.active .wz-label  { color:var(--ep);font-weight:600; }
+      .wz-step.done   .wz-label  { color:#28a745; }
+      .wz-line  { flex:1;height:2px;background:#dee2e6;margin:19px 4px 0;transition:background .25s; }
+      .wz-line.done { background:#28a745; }
+
+      /* ── Step card ────────────────────────────────── */
+      .step-panel  { background:#fff;border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,.06);padding:28px 32px; }
+      .step-title  { font-size:20px;font-weight:700;color:var(--ep-dark);margin-bottom:4px; }
+      .step-num    { display:inline-flex;width:26px;height:26px;background:var(--ep);color:#fff;border-radius:50%;align-items:center;justify-content:center;font-size:13px;margin-right:7px;font-weight:700; }
+
+      /* ── Option cards (underlayment, ventilation) ─── */
+      .opt-card { cursor:pointer;border:2px solid #e9ecef;border-radius:10px;padding:16px;transition:all .2s;height:100%;position:relative; }
+      .opt-card:hover { border-color:var(--ep);background:var(--ep-light); }
+      .opt-card.sel   { border-color:var(--ep);background:var(--ep-light); }
+      .opt-card.sel::after { content:'✓';position:absolute;top:10px;right:12px;color:var(--ep);font-weight:700;font-size:15px; }
+      .opt-icon  { font-size:26px;display:block;margin-bottom:6px; }
+      .opt-title { font-weight:700;font-size:14px;color:var(--ep-dark);margin-bottom:4px; }
+      .opt-desc  { font-size:12px;color:#666;line-height:1.5; }
+      .opt-price { font-size:16px;font-weight:700;color:var(--ep);margin-top:8px; }
+      .badge-inc  { background:#d4edda;color:#155724;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600; }
+      .badge-upg  { background:#fff3cd;color:#856404;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600; }
+      .badge-prem { background:#d1ecf1;color:#0c5460;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600; }
+
+      /* ── Shingle + pitch group cards ─────────────── */
+      .tier-card { cursor:pointer;border:2px solid #e9ecef;border-radius:10px;padding:14px 10px;text-align:center;transition:all .2s;position:relative;height:100%; }
+      .tier-card:hover { border-color:var(--ep);background:var(--ep-light); }
+      .tier-card.sel   { border-color:var(--ep);background:var(--ep-light); }
+      .tier-card.sel::after { content:'✓';position:absolute;top:8px;right:10px;color:var(--ep);font-weight:700; }
+      .tier-card.pop::before { content:'POPULAR';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--ep);color:#fff;font-size:9px;font-weight:700;padding:2px 9px;border-radius:10px; }
+      .tier-name  { font-weight:700;font-size:16px; }
+      .tier-spec  { font-size:11px;color:#666;margin:3px 0; }
+      .tier-price { font-size:17px;font-weight:700;color:var(--ep);margin-top:8px; }
+
+      /* ── Slope group cards ────────────────────────── */
+      .slope-card { cursor:pointer;border:2px solid #e9ecef;border-radius:10px;padding:14px 10px;text-align:center;transition:all .2s;position:relative;height:100%; }
+      .slope-card:hover { border-color:var(--ep);background:var(--ep-light); }
+      .slope-card.sel   { border-color:var(--ep);background:var(--ep-light); }
+      .slope-card.sel::after { content:'✓';position:absolute;top:8px;right:10px;color:var(--ep);font-weight:700; }
+      .slope-icon  { font-size:28px;display:block;margin-bottom:5px; }
+      .slope-name  { font-weight:700;font-size:14px; }
+      .slope-range { font-size:11px;color:#666;margin:3px 0; }
+      .slope-mult  { font-size:12px;font-weight:700;margin-top:6px; }
+      .slope-mult.m-std   { color:#28a745; }
+      .slope-mult.m-steep { color:#e67e22; }
+      .slope-mult.m-vst   { color:#e74c3c; }
+
+      /* ── Qty row ──────────────────────────────────── */
+      .qty-row { display:flex;align-items:center;gap:8px;margin-top:8px; }
+      .qty-btn { width:28px;height:28px;border-radius:50%;border:1px solid var(--ep);background:#fff;color:var(--ep);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1;transition:all .2s; }
+      .qty-btn:hover { background:var(--ep);color:#fff; }
+      .qty-num { font-weight:700;font-size:15px;min-width:18px;text-align:center; }
+
+      /* ── Storeys ──────────────────────────────────── */
+      .story-btn { border:2px solid #dee2e6;border-radius:8px;padding:14px 10px;cursor:pointer;text-align:center;transition:all .2s;background:#fff; }
+      .story-btn:hover { border-color:var(--ep);background:var(--ep-light); }
+      .story-btn.sel { border-color:var(--ep);background:var(--ep-light);font-weight:700; }
+      .story-icon { font-size:22px;display:block;margin-bottom:4px; }
+      .story-lbl  { font-size:13px;font-weight:600; }
+
+      /* ── Map ──────────────────────────────────────── */
+      #propertyMapContainer { height:260px;border-radius:8px;overflow:hidden;background:#e9ecef;margin-bottom:18px;position:relative; }
+      #propertyMap { width:100%;height:100%;display:none; }
+      .map-ph { width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#999;font-size:14px;text-align:center;gap:10px; }
+
+      /* ── Calc display ─────────────────────────────── */
+      .calc-box  { background:#f8f9fa;border:1px solid #dee2e6;border-radius:6px;padding:10px 14px; }
+      .calc-big  { font-size:22px;font-weight:700;color:var(--ep); }
+      .calc-small{ font-size:11px;color:#888;display:block;margin-top:2px; }
+
+      /* ── Toggle card ──────────────────────────────── */
+      .toggle-card { display:flex;align-items:center;justify-content:space-between;background:#f8f9fa;border:2px solid #e9ecef;border-radius:10px;padding:16px;cursor:pointer;transition:all .2s; }
+      .toggle-card.on { border-color:var(--ep);background:var(--ep-light); }
+      .tog-info h6 { font-weight:700;font-size:14px;margin-bottom:2px; }
+      .tog-info small { color:#666;font-size:12px; }
+      .tog-wrap  { position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;margin-left:12px; }
+      .tog-wrap input { opacity:0;width:0;height:0; }
+      .tog-slider { position:absolute;inset:0;background:#ccc;border-radius:24px;transition:.3s;cursor:pointer; }
+      .tog-slider::before { content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s; }
+      input:checked + .tog-slider { background:var(--ep); }
+      input:checked + .tog-slider::before { transform:translateX(20px); }
+
+      /* ── Sidebar ──────────────────────────────────── */
+      .cost-sidebar { background:#fff;border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,.08);padding:20px;position:sticky;top:24px; }
+      .cost-sidebar h5 { font-weight:700;font-size:15px;border-bottom:1px solid #f0f0f0;padding-bottom:11px;margin-bottom:13px; }
+      .cline  { display:flex;justify-content:space-between;font-size:13px;padding:5px 0; }
+      .cline .cl { color:#666; }
+      .cline .cv { font-weight:600; }
+      .cline.ctotal { border-top:2px solid var(--ep);margin-top:8px;padding-top:10px;font-size:15px;font-weight:700; }
+      .cline.ctotal .cv { color:var(--ep);font-size:19px; }
+      .sidebar-addr { font-size:11px;color:#999;margin-bottom:13px;word-break:break-word; }
+
+      /* ── Mobile cost bar ──────────────────────────── */
+      .mob-bar { position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;color:#fff;padding:11px 20px;z-index:1050;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -2px 10px rgba(0,0,0,.2); }
+      .mob-bar .m-lbl { font-size:11px;color:#aaa; }
+      .mob-bar .m-tot { font-size:20px;font-weight:700;color:var(--ep); }
+      .mob-bar .m-sub { font-size:10px;color:#888; }
+
+      /* ── Lead panel ───────────────────────────────── */
+      .lead-panel { background:#fff;border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,.06);padding:40px;max-width:660px;margin:0 auto; }
+      .trust-row  { display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:26px; }
+      .trust-badge{ display:flex;align-items:center;gap:5px;font-size:12px;color:#555; }
+      .trust-badge i { color:var(--ep); }
+
+      /* ── Step nav ─────────────────────────────────── */
+      .step-nav { display:flex;justify-content:space-between;align-items:center;margin-top:26px;padding-top:18px;border-top:1px solid #f0f0f0; }
+      .btn-prev { background:transparent;border:1px solid #dee2e6;color:#666;padding:10px 22px;border-radius:6px;font-weight:600;cursor:pointer;font-size:14px; }
+      .btn-prev:hover { background:#f8f9fa; }
+      .btn-nxt  { background:var(--ep);color:#fff;border:none;padding:10px 26px;border-radius:6px;font-weight:700;cursor:pointer;font-size:14px;transition:background .2s; }
+      .btn-nxt:hover { background:#d95d00; }
+
+      /* ── Summary ──────────────────────────────────── */
+      .sum-total-box { background:var(--ep);color:#fff;border-radius:10px;padding:22px;text-align:center;margin:20px 0; }
+      .sum-total-box .st-lbl { font-size:13px;opacity:.85; }
+      .sum-total-box .st-amt { font-size:40px;font-weight:700;line-height:1.2; }
+      .sum-breakdown { border:1px solid #e9ecef;border-radius:8px;overflow:hidden;font-size:13px; }
+      .brow { display:flex;justify-content:space-between;padding:11px 16px;border-bottom:1px solid #f0f0f0; }
+      .brow:last-child { border-bottom:none; }
+      .brow.bhdr { background:#f8f9fa;font-weight:700;font-size:11px;color:#888;text-transform:uppercase; }
+      .brow .bv { font-weight:700;color:var(--ep-dark); }
+      .cta-box   { background:#f8f9fa;border-radius:10px;padding:26px;text-align:center;margin-top:22px; }
+      .disclaimer{ font-size:11px;color:#aaa;line-height:1.6;margin-top:10px; }
+
+      /* ── Eave breakdown ───────────────────────────── */
+      .eave-box { background:#f8f9fa;border-radius:8px;padding:14px 16px;font-size:13px;margin-bottom:20px; }
+      .eave-row { display:flex;justify-content:space-between;padding:4px 0; }
+      .eave-row.et { border-top:1px solid #dee2e6;padding-top:8px;margin-top:4px;font-weight:700;color:var(--ep); }
+
+      /* ── Address confirmation ────────────────────── */
+      #l_address.addr-ok  { border-color:#28a745; }
+      #l_address.addr-err { border-color:#dc3545; }
+      .addr-status { display:none; align-items:center; gap:5px; font-size:12px; font-weight:600; margin-top:5px; }
+      .addr-status.show-ok  { display:flex; color:#155724; }
+      .addr-status.show-err { display:flex; color:#721c24; }
+      .addr-status.show-loading { display:flex; color:#856404; }
+
+      /* ── API badge ────────────────────────────────── */
+      .api-badge { display:inline-flex;align-items:center;gap:5px;background:#d4edda;color:#155724;font-size:11px;font-weight:600;padding:3px 9px;border-radius:12px;margin-top:4px; }
+      .api-badge.hidden { display:none; }
+
+      /* ── Property details panel ──────────────────── */
+      .prop-details-panel { background:#f8f9fa;border:1px solid #e2e8f0;border-radius:8px;padding:14px 16px;margin-top:14px; }
+      .prop-details-panel.hidden { display:none; }
+      .prop-details-panel .pd-title { font-size:11px;font-weight:700;color:#155724;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px; }
+      .prop-details-tbl { width:100%;border-collapse:collapse;font-size:13px; }
+      .prop-details-tbl th { color:#888;font-weight:600;font-size:11px;text-transform:uppercase;padding:3px 8px 7px;border-bottom:1px solid #dee2e6;text-align:left; }
+      .prop-details-tbl th:not(:first-child) { text-align:right; }
+      .prop-details-tbl td { padding:5px 8px;color:#333; }
+      .prop-details-tbl td:not(:first-child) { text-align:right;font-variant-numeric:tabular-nums; }
+      .prop-details-tbl .pd-total td { font-weight:700;border-top:1px solid #dee2e6;padding-top:8px;color:var(--ep-dark); }
+
+      @keyframes spin { to { transform:rotate(360deg); } }
+
+      /* ── Data spinner ─────────────────────────────── */
+      .data-spin { text-align:center;padding:8px;color:#888;font-size:13px;display:none; }
+
+      /* ── Form ─────────────────────────────────────── */
+      .estimator-section .form-control { border-radius:6px;border:1px solid #dee2e6;font-size:14px;padding:9px 13px;height:auto; }
+      .estimator-section .form-control:focus { border-color:var(--ep);box-shadow:0 0 0 2px rgba(249,109,0,.15);outline:none; }
+      .estimator-section label { font-size:13px;font-weight:600;color:#444;margin-bottom:4px; }
+
+      @media(max-width:991px){ .step-panel{padding:20px 16px;} .lead-panel{padding:26px 18px;} body{padding-bottom:65px;} }
+      @media(max-width:575px){ .wz-label{display:none;} .wz-step{min-width:38px;} }
+
+      /* ── HERE autocomplete dropdown ───────────────────────────────── */
+      .here-wrap { position:relative; }
+      .here-dd {
+        position:absolute;top:100%;left:0;right:0;
+        background:#fff;border:1px solid #dee2e6;border-top:none;
+        border-radius:0 0 6px 6px;z-index:9999;
+        box-shadow:0 4px 12px rgba(0,0,0,.1);
+        max-height:280px;overflow-y:auto;display:none;
+      }
+      .here-item { padding:10px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid #f8f9fa; }
+      .here-item:last-child { border-bottom:none; }
+      .here-item:hover, .here-item.hi-active { background:var(--ep-light); }
+      .here-item .hi-main { font-weight:600;color:var(--ep-dark); }
+      .here-item .hi-sub  { font-size:11px;color:#888;margin-top:2px; }
+      .here-msg { padding:10px 14px;font-size:12px;color:#888;font-style:italic; }
+      .here-msg-err { color:#856404; font-style:normal; }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  </head>
+  <body>
+
+    <div id="ftco-loader" class="show fullscreen">
+      <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/>
+      </svg>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html" style="display:flex;align-items:center;gap:8px;">
+          <img src="images/curoofing_logo2.png" alt="CU Roofing" style="height:40px;">CURoofing.ca
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="index.html#About" class="nav-link">About Us</a></li>
+            <li class="nav-item"><a href="index.html#Service" class="nav-link">Service</a></li>
+            <li class="nav-item"><a href="index.html#Materials" class="nav-link">Materials</a></li>
+            <li class="nav-item active"><a href="estimate.html" class="nav-link">Free Estimate</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="admin.html" class="nav-link">Admin</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero-wrap hero-wrap-2 ftco-degree-bg js-fullheight" style="background-image:url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="overlay-2"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate pb-5 mb-5 text-center">
+            <h1 class="mb-3 bread">Free Roof Estimate</h1>
+            <p class="breadcrumbs">
+              <span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span>
+              <span>Free Estimate <i class="ion-ios-arrow-forward"></i></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════ ESTIMATOR ═══════════════════════════════ -->
+    <section class="estimator-section">
+      <div class="container">
+
+        <!-- STEP 0 · Lead capture -->
+        <div id="panel-lead">
+          <div class="lead-panel">
+            <div class="text-center mb-4">
+              <div style="font-size:48px;margin-bottom:10px;">🏠</div>
+              <h3 style="font-size:26px;font-weight:700;">Get Your Instant Roof Estimate</h3>
+              <p class="text-muted" style="font-size:15px;">Takes 2 minutes &mdash; No obligation</p>
+              <div class="trust-row">
+                <span class="trust-badge"><i class="ion-ios-checkmark-circle"></i> Licensed &amp; Insured</span>
+                <span class="trust-badge"><i class="ion-ios-checkmark-circle"></i> Serving All GTA</span>
+                <span class="trust-badge"><i class="ion-ios-checkmark-circle"></i> 10-Year Warranty</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Full Name <span style="color:var(--ep)">*</span></label>
+                  <input type="text" id="l_name" class="form-control" placeholder="e.g. Jane Smith" autocomplete="name">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Phone Number <span style="color:var(--ep)">*</span></label>
+                  <input type="tel" id="l_phone" class="form-control" placeholder="e.g. (416) 555-0123" autocomplete="tel">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email Address <span style="color:var(--ep)">*</span></label>
+              <input type="email" id="l_email" class="form-control" placeholder="e.g. jane@example.com" autocomplete="email">
+            </div>
+            <div class="form-group here-wrap">
+              <label>Property Address <span style="color:var(--ep)">*</span></label>
+              <input type="text" id="l_address" class="form-control" placeholder="Start typing your address…" autocomplete="off" oninput="hereInput(this.value)" onkeydown="hereKeyDown(event)" onblur="hereBlur()" onfocus="hereFocus()">
+              <div id="here-dd" class="here-dd"></div>
+              <div id="addr-status" class="addr-status"></div>
+              <small class="form-text text-muted">e.g. 123 Main St, Toronto, ON</small>
+            </div>
+            <div id="leadErr" class="alert alert-danger" style="display:none;"></div>
+            <button class="btn-nxt w-100" style="padding:14px;font-size:16px;" onclick="startEstimate()">
+              Start My Estimate &rarr;
+            </button>
+            <p style="text-align:center;font-size:11px;color:#bbb;margin-top:12px;">
+              Your information is used only to prepare your estimate and will never be shared.
+            </p>
+          </div>
+        </div>
+
+        <!-- Property details: shown as soon as the address is geocoded -->
+        <div id="prop-details-panel" class="prop-details-panel hidden">
+          <div class="pd-title"><i class="ion-ios-locate"></i> Property detected from building outline</div>
+          <table class="prop-details-tbl">
+            <thead>
+              <tr>
+                <th>Building</th>
+                <th>Footprint</th>
+                <th>Perimeter</th>
+              </tr>
+            </thead>
+            <tbody id="prop-details-rows"></tbody>
+          </table>
+        </div>
+
+        <!-- WIZARD -->
+        <div id="wizard-wrap" style="display:none;">
+
+          <!-- Progress -->
+          <div class="wizard-progress">
+            <div class="wz-step active" id="ws1"><div class="wz-circle">1</div><div class="wz-label">Property</div></div>
+            <div class="wz-line" id="wl1"></div>
+            <div class="wz-step" id="ws2"><div class="wz-circle">2</div><div class="wz-label">Protection</div></div>
+            <div class="wz-line" id="wl2"></div>
+            <div class="wz-step" id="ws3"><div class="wz-circle">3</div><div class="wz-label">Ventilation</div></div>
+            <div class="wz-line" id="wl3"></div>
+            <div class="wz-step" id="ws4"><div class="wz-circle">4</div><div class="wz-label">Eavestrough</div></div>
+            <div class="wz-line" id="wl4"></div>
+            <div class="wz-step" id="ws5">
+              <div class="wz-circle"><i class="ion-ios-checkmark" style="font-size:17px;"></i></div>
+              <div class="wz-label">Summary</div>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <!-- ════ Main steps ════════════════════════════════════════════════ -->
+            <div class="col-lg-8">
+
+              <!-- ── STEP 1 · Property ─────────────────────────────────────── -->
+              <div id="step-1" class="step-panel">
+                <h4 class="step-title mb-1"><span class="step-num">1</span> Your Property</h4>
+                <p class="text-muted mb-3" style="font-size:13px;">We auto-detect your building outline from open map data. Adjust if needed.</p>
+
+                <!-- Satellite map + building polygon overlay -->
+                <div id="propertyMapContainer">
+                  <div id="map-ph" class="map-ph">
+                    <div class="spinner-border text-warning" style="width:2rem;height:2rem;" role="status"></div>
+                    <span id="map-ph-txt">Loading your property map&hellip;</span>
+                  </div>
+                  <div id="propertyMap"></div>
+                </div>
+
+                <!-- API fetch spinner -->
+                <div id="data-spin" class="data-spin">
+                  <div class="spinner-border text-warning" style="width:1.3rem;height:1.3rem;" role="status"></div>
+                  &nbsp;Detecting building outline&hellip;
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Home Type</label>
+                      <select id="homeType" class="form-control" onchange="onHomeTypeChange()">
+                        <option value="detached">Detached Home</option>
+                        <option value="semi">Semi-Detached</option>
+                        <option value="townhouse">Townhouse</option>
+                        <option value="commercial">Commercial / Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>
+                        Building Footprint (sq ft)
+                        <span id="footprint-badge" class="api-badge hidden"><i class="ion-ios-locate"></i> Auto-detected</span>
+                      </label>
+                      <input type="number" id="footprint" class="form-control" value="1500" min="200" max="50000" oninput="updateCalc()">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Estimated Roof Area</label>
+                      <div class="calc-box">
+                        <span class="calc-big" id="calcArea">—</span>
+                        <span style="font-size:14px;color:#888;"> sq ft</span>
+                        <span class="calc-small" id="calcAreaNote">Footprint &times; slope multiplier</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slope group selector (3-group matrix) -->
+                <div class="mt-2 mb-3">
+                  <label class="d-block mb-2" style="font-size:13px;font-weight:700;">
+                    Roof Slope
+                    <span class="text-muted" style="font-weight:400;font-size:11px;">— select the closest match for your roof</span>
+                  </label>
+                  <div class="row">
+                    <div class="col-md-4 mb-2">
+                      <div class="slope-card sel" id="sg-standard" onclick="selSlopeGroup('standard')">
+                        <span class="slope-icon">🏠</span>
+                        <div class="slope-name">Standard</div>
+                        <div class="slope-range">Flat to 7/12 &bull; 0°–30°</div>
+                        <div class="slope-mult m-std">&times; 1.2 area multiplier</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="slope-card" id="sg-steep" onclick="selSlopeGroup('steep')">
+                        <span class="slope-icon">🏔️</span>
+                        <div class="slope-name">Steep</div>
+                        <div class="slope-range">8/12 to 10/12 &bull; 31°–40°</div>
+                        <div class="slope-mult m-steep">&times; 1.4 area multiplier</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="slope-card" id="sg-verySteep" onclick="selSlopeGroup('verySteep')">
+                        <span class="slope-icon">⛰️</span>
+                        <div class="slope-name">Very Steep</div>
+                        <div class="slope-range">11/12 &amp; above &bull; 41°+</div>
+                        <div class="slope-mult m-vst">&times; 1.5 area multiplier</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Shingle package selector -->
+                <div class="mt-1">
+                  <label class="d-block mb-2" style="font-size:13px;font-weight:700;">Shingle Package</label>
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <div class="tier-card" id="tc-good" onclick="selectTier('good')">
+                        <div class="tier-name">Good</div>
+                        <div class="tier-spec">30-year architectural</div>
+                        <div class="tier-spec" style="color:#bbb;">IKO / BP</div>
+                        <div class="tier-price" id="tp-good">—</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="tier-card pop sel" id="tc-better" onclick="selectTier('better')">
+                        <div class="tier-name">Better</div>
+                        <div class="tier-spec">40-year dimensional</div>
+                        <div class="tier-spec" style="color:#bbb;">GAF / Owens Corning</div>
+                        <div class="tier-price" id="tp-better">—</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="tier-card" id="tc-best" onclick="selectTier('best')">
+                        <div class="tier-name">Best</div>
+                        <div class="tier-spec">50-year premium</div>
+                        <div class="tier-spec" style="color:#bbb;">CertainTeed / GAF HDZ</div>
+                        <div class="tier-price" id="tp-best">—</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step-nav">
+                  <span></span>
+                  <button class="btn-nxt" onclick="goTo(2)">Next: Protection &rarr;</button>
+                </div>
+              </div>
+
+              <!-- ── STEP 2 · Underlayment ─────────────────────────────────── -->
+              <div id="step-2" class="step-panel" style="display:none;">
+                <h4 class="step-title mb-1"><span class="step-num">2</span> Roof Protection (Underlayment)</h4>
+                <p class="text-muted mb-4" style="font-size:13px;">Ice and water shield protects against GTA winters, ice dams, and wind-driven rain.</p>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <div class="opt-card sel" id="oc-us" onclick="selUnder('standard')">
+                      <span class="opt-icon">🛡️</span>
+                      <div><span class="badge-inc">Included</span></div>
+                      <div class="opt-title mt-2">Standard Protection</div>
+                      <div class="opt-desc">3-foot ice &amp; water barrier along all roof perimeter edges — meets Ontario Building Code minimum.</div>
+                      <div class="opt-price">$0 add-on</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="opt-card" id="oc-uf" onclick="selUnder('full')">
+                      <span class="opt-icon">🔒</span>
+                      <div><span class="badge-upg">Upgrade</span></div>
+                      <div class="opt-title mt-2">Full Coverage</div>
+                      <div class="opt-desc">Ice &amp; water shield over the entire roof deck. Maximum protection — recommended for older homes and severe weather exposure.</div>
+                      <div class="opt-price" id="under-upg-price">+$—</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-nav">
+                  <button class="btn-prev" onclick="goTo(1)">&larr; Back</button>
+                  <button class="btn-nxt" onclick="goTo(3)">Next: Ventilation &rarr;</button>
+                </div>
+              </div>
+
+              <!-- ── STEP 3 · Ventilation ──────────────────────────────────── -->
+              <div id="step-3" class="step-panel" style="display:none;">
+                <h4 class="step-title mb-1"><span class="step-num">3</span> Roof Ventilation</h4>
+                <p class="text-muted mb-4" style="font-size:13px;">Good ventilation extends your roof's lifespan and reduces heating and cooling costs.</p>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <div class="opt-card sel" id="ov-standard" onclick="selVent('standard')">
+                      <span class="opt-icon">🌬️</span>
+                      <div><span class="badge-inc">Included</span></div>
+                      <div class="opt-title mt-2">Standard Plastic Vents</div>
+                      <div class="opt-desc">Low-profile plastic ridge vents. Reliable passive ventilation included in your base package.</div>
+                      <div class="opt-price">$0 add-on</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="opt-card" id="ov-box" onclick="selVent('box')">
+                      <span class="opt-icon">🏠</span>
+                      <div><span class="badge-upg">Upgrade</span></div>
+                      <div class="opt-title mt-2">Tower / Box Vents</div>
+                      <div class="opt-desc">Raised box vents with higher airflow. 1 vent = $300 &bull; each additional = $250.</div>
+                      <div class="qty-row" id="qr-box" style="display:none;">
+                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(-1)">&#8722;</button>
+                        <span class="qty-num" id="qn1">1</span>
+                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(1)">+</button>
+                        <span style="font-size:12px;color:#888;">vent(s)</span>
+                        <strong class="ml-auto" id="vp-box" style="color:var(--ep);">$300</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="opt-card" id="ov-turbine" onclick="selVent('turbine')">
+                      <span class="opt-icon">🌀</span>
+                      <div><span class="badge-upg">Upgrade</span></div>
+                      <div class="opt-title mt-2">Turbine Vents</div>
+                      <div class="opt-desc">Wind-powered spinning vents. No electricity needed. Great airflow even in a light breeze. $375 per unit.</div>
+                      <div class="qty-row" id="qr-turbine" style="display:none;">
+                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(-1)">&#8722;</button>
+                        <span class="qty-num" id="qn2">1</span>
+                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(1)">+</button>
+                        <span style="font-size:12px;color:#888;">vent(s)</span>
+                        <strong class="ml-auto" id="vp-turbine" style="color:var(--ep);">$375</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="opt-card" id="ov-solar" onclick="selVent('solar')">
+                      <span class="opt-icon">☀️</span>
+                      <div><span class="badge-prem">Premium</span></div>
+                      <div class="opt-title mt-2">Solar Panel Vents</div>
+                      <div class="opt-desc">Solar-powered electric fans. Maximum ventilation, zero operating cost. Eco-friendly choice. $650 per unit.</div>
+                      <div class="qty-row" id="qr-solar" style="display:none;">
+                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(-1)">&#8722;</button>
+                        <span class="qty-num" id="qn3">1</span>
+                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(1)">+</button>
+                        <span style="font-size:12px;color:#888;">vent(s)</span>
+                        <strong class="ml-auto" id="vp-solar" style="color:var(--ep);">$650</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-nav">
+                  <button class="btn-prev" onclick="goTo(2)">&larr; Back</button>
+                  <button class="btn-nxt" onclick="goTo(4)">Next: Eavestrough &rarr;</button>
+                </div>
+              </div>
+
+              <!-- ── STEP 4 · Eavestrough ──────────────────────────────────── -->
+              <div id="step-4" class="step-panel" style="display:none;">
+                <h4 class="step-title mb-1"><span class="step-num">4</span> Eavestrough &amp; Downspouts</h4>
+                <p class="text-muted mb-1" style="font-size:13px;">Directs rainwater away from your foundation. Calculated from your roof perimeter.</p>
+                <div id="perim-source-note" class="api-badge hidden mb-3">
+                  <i class="ion-ios-locate"></i> Perimeter measured from your building outline
+                </div>
+
+                <div class="form-group mb-4">
+                  <label class="d-block mb-3" style="font-size:13px;font-weight:700;">How many storeys is your home?</label>
+                  <div class="row">
+                    <div class="col-4"><div class="story-btn sel" id="sb1" onclick="selStories(1)"><span class="story-icon">🏠</span><span class="story-lbl">1 Storey</span></div></div>
+                    <div class="col-4"><div class="story-btn"    id="sb2" onclick="selStories(2)"><span class="story-icon">🏡</span><span class="story-lbl">2 Storeys</span></div></div>
+                    <div class="col-4"><div class="story-btn"    id="sb3" onclick="selStories(3)"><span class="story-icon">🏢</span><span class="story-lbl">3 Storeys</span></div></div>
+                  </div>
+                </div>
+
+                <div class="eave-box" id="eave-breakdown"></div>
+
+                <div class="toggle-card" id="caps-card">
+                  <div class="tog-info">
+                    <h6>Add Eavestrough Leaf Guards (Caps)</h6>
+                    <small>Prevents leaves and debris from clogging eavestroughs. +$5/linear ft of roof perimeter.</small>
+                    <div style="margin-top:6px;font-weight:700;color:var(--ep);" id="caps-price">+$—</div>
+                  </div>
+                  <label class="tog-wrap ml-3" onclick="event.stopPropagation()">
+                    <input type="checkbox" id="capsChk" onchange="onCapsChange()">
+                    <span class="tog-slider"></span>
+                  </label>
+                </div>
+
+                <div class="step-nav">
+                  <button class="btn-prev" onclick="goTo(3)">&larr; Back</button>
+                  <button class="btn-nxt" onclick="goTo(5)">View My Estimate &rarr;</button>
+                </div>
+              </div>
+
+              <!-- ── SUMMARY ────────────────────────────────────────────────── -->
+              <div id="step-5" class="step-panel" style="display:none;">
+                <div class="text-center mb-3">
+                  <div style="font-size:32px;">🎉</div>
+                  <h4 class="step-title">Your Roofing Estimate</h4>
+                  <p class="text-muted" style="font-size:13px;">Prepared for <strong id="sum-name"></strong> &bull; <span id="sum-addr"></span></p>
+                </div>
+                <div class="sum-total-box">
+                  <div class="st-lbl">Estimated Project Cost</div>
+                  <div class="st-amt" id="sum-total">$—</div>
+                  <div class="st-lbl">Range: <span id="sum-lo">$—</span> &ndash; <span id="sum-hi">$—</span></div>
+                </div>
+                <div class="sum-breakdown" id="sum-breakdown"></div>
+                <p class="disclaimer">* This is an automated estimate based on typical 2025 GTA roofing costs. Actual costs may vary ±15% depending on site conditions, material availability, and access. A professional on-site inspection is required for a binding quote.</p>
+                <div class="cta-box">
+                  <h5 style="font-weight:700;">Ready to move forward?</h5>
+                  <p style="font-size:14px;color:#666;">Book a free professional on-site verification — usually same or next day.</p>
+                  <a href="contact.html" class="btn-nxt" style="display:inline-block;text-decoration:none;padding:12px 30px;font-size:15px;">Book a Free Site Inspection &rarr;</a>
+                  <div class="mt-3">
+                    <a href="tel:4168300685" style="font-size:14px;color:var(--ep);font-weight:600;text-decoration:none;">
+                      <i class="ion-ios-call"></i> Or call us now: (416) 830-0685
+                    </a>
+                  </div>
+                  <button onclick="startOver()" class="btn btn-link text-muted mt-2" style="font-size:13px;">Start a new estimate</button>
+                </div>
+              </div>
+
+            </div><!-- /col-lg-8 -->
+
+            <!-- ════ Sticky sidebar ════════════════════════════════════════════ -->
+            <div class="col-lg-4 d-none d-lg-block">
+              <div class="cost-sidebar">
+                <h5>📋 Running Estimate</h5>
+                <div class="sidebar-addr" id="sb-addr"></div>
+                <div id="sb-lines">
+                  <div class="cline"><span class="cl">Complete the steps to see your estimate</span></div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /row -->
+        </div><!-- /wizard-wrap -->
+
+      </div><!-- /container -->
+    </section>
+
+    <!-- Mobile cost bar -->
+    <div class="mob-bar d-lg-none" id="mob-bar" style="display:none !important;">
+      <div>
+        <div class="m-lbl">Running Estimate</div>
+        <div class="m-tot" id="mob-tot">$0</div>
+        <div class="m-sub">&plusmn;15% final variance</div>
+      </div>
+      <div style="text-align:right;font-size:12px;color:#aaa;">
+        Roof area<br><strong id="mob-sqft" style="color:#fff;">—</strong> sq ft
+      </div>
+    </div>
+
+    <footer class="ftco-footer ftco-section">
+      <div class="row">
+        <div class="ftco-footer-widget col-md-12 text-center">
+          <ul class="ftco-footer-social list-unstyled ftco-footer-widget">
+            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-md-12 text-center">
+          <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> CU Roofing in Greater Toronto Area</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.easing.1.3.js"></script>
+    <script src="./js/jquery.waypoints.min.js"></script>
+    <script src="./js/jquery.stellar.min.js"></script>
+    <script src="./js/owl.carousel.min.js"></script>
+    <script src="./js/jquery.magnific-popup.min.js"></script>
+    <script src="./js/aos.js"></script>
+    <script src="./js/jquery.animateNumber.min.js"></script>
+    <script src="./js/bootstrap-datepicker.js"></script>
+    <script src="./js/jquery.timepicker.min.js"></script>
+    <script src="./js/scrollax.min.js"></script>
+    <script src="./js/main.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+    /* ══════════════════════════════════════════════════════════════════
+       STATE
+    ══════════════════════════════════════════════════════════════════ */
+    var S = {
+      name:'', email:'', phone:'', address:'', lat:null, lng:null, addrConfirmed:false,
+      homeType:'detached', footprint:1500,
+      slopeGroup:'standard',    // 'standard' | 'steep' | 'verySteep'
+      tier:'better',
+      underlayment:'standard',
+      ventType:'standard', ventQty:1,
+      stories:1, addCaps:false,
+      perimeterFt:null,         // null = use estimate; number = from building polygon
+      pendingPolygon:null,      // polygon received before map was ready
+      step:0, mapInit:false,
+    };
+
+    /* ══════════════════════════════════════════════════════════════════
+       PRICING CONSTANTS
+       ─────────────────────────────────────────────────────────────────
+       Slope multiplier matrix (3-group):
+         Standard  0°–30°  (flat to 7/12)          × 1.2
+         Steep     31°–40° (8/12 to 10/12)          × 1.4
+         Very Steep 41°+   (11/12 and above)        × 1.5
+    ══════════════════════════════════════════════════════════════════ */
+    var P = {
+      shingles:   { good:5.50, better:7.50, best:10.00 },  // $ per roof sq ft
+      underUpg:   0.75,                                     // $ per roof sq ft (full upgrade)
+      vent:       { box:{ first:300, add:250 }, turbine:375, solar:650 },
+      eave:       { perFt:8, capFt:5 },
+      ds:         { 1:50, 2:100, 3:150 },                   // total downspout ft by storeys
+      slopeMult:  { standard:1.2, steep:1.4, verySteep:1.5 },
+      htDef:      { detached:1500, semi:1000, townhouse:700, commercial:3000 },
+    };
+
+    /* ══════════════════════════════════════════════════════════════════
+       CALCULATIONS
+    ══════════════════════════════════════════════════════════════════ */
+    function roofArea() { return Math.round(S.footprint * P.slopeMult[S.slopeGroup]); }
+
+    function perimFt() {
+      if (S.perimeterFt) return S.perimeterFt;
+      return Math.round(4.5 * Math.sqrt(S.footprint));
+    }
+
+    function costs() {
+      var a = roofArea(), pm = perimFt(), ds = P.ds[S.stories];
+      var shingle = a * P.shingles[S.tier];
+      var under   = S.underlayment === 'full' ? a * P.underUpg : 0;
+      var vent    = 0;
+      if (S.ventType === 'box')     vent = S.ventQty === 1 ? 300 : S.ventQty * 250;
+      if (S.ventType === 'turbine') vent = S.ventQty * P.vent.turbine;
+      if (S.ventType === 'solar')   vent = S.ventQty * P.vent.solar;
+      var eaveBase = (pm + ds) * P.eave.perFt;
+      var caps     = S.addCaps ? pm * P.eave.capFt : 0;
+      return { a:a, pm:pm, ds:ds, shingle:shingle, under:under, vent:vent,
+               eaveBase:eaveBase, caps:caps, total:shingle+under+vent+eaveBase+caps };
+    }
+
+    function $$(n) { return '$' + Math.round(n).toLocaleString('en-CA'); }
+
+    /* ══════════════════════════════════════════════════════════════════
+       UI UPDATES
+    ══════════════════════════════════════════════════════════════════ */
+    function updateCalc() {
+      S.footprint = parseInt(document.getElementById('footprint').value) || 1500;
+      var a = roofArea(), pm = perimFt();
+
+      document.getElementById('calcArea').textContent = a.toLocaleString('en-CA');
+      document.getElementById('calcAreaNote').textContent =
+        S.footprint + ' ft² × ' + P.slopeMult[S.slopeGroup] + ' slope = ' + a + ' ft²';
+
+      document.getElementById('tp-good').textContent   = $$(a * P.shingles.good);
+      document.getElementById('tp-better').textContent = $$(a * P.shingles.better);
+      document.getElementById('tp-best').textContent   = $$(a * P.shingles.best);
+      document.getElementById('under-upg-price').textContent = '+' + $$(a * P.underUpg);
+      document.getElementById('caps-price').textContent      = '+' + $$(pm * P.eave.capFt);
+
+      renderEaveBox(pm);
+      renderSidebar();
+    }
+
+    function renderEaveBox(pm) {
+      pm = pm || perimFt();
+      var ds = P.ds[S.stories];
+      var base = (pm + ds) * P.eave.perFt;
+      document.getElementById('eave-breakdown').innerHTML =
+        '<div class="eave-row"><span>Roof perimeter' + (S.perimeterFt ? ' (from building outline)' : ' (estimated)') + '</span><strong>' + pm + ' ft</strong></div>' +
+        '<div class="eave-row"><span>Downspouts (' + S.stories + ' storey &times; 5 = ' + ds + ' ft)</span><strong>' + ds + ' ft</strong></div>' +
+        '<div class="eave-row et"><span>Base eavestrough cost (' + (pm+ds) + ' ft &times; $8)</span><strong>' + $$(base) + '</strong></div>';
+    }
+
+    function renderSidebar() {
+      var c  = costs();
+      var sl = { standard:'Standard ×1.2', steep:'Steep ×1.4', verySteep:'Very Steep ×1.5' };
+      var tl = { good:'Good 30-yr', better:'Better 40-yr', best:'Best 50-yr' };
+      var vl = { standard:'Standard (incl.)', box:'Box ×'+S.ventQty, turbine:'Turbine ×'+S.ventQty, solar:'Solar ×'+S.ventQty };
+      var ul = { standard:'Standard edge', full:'Full coverage' };
+
+      var html =
+        '<div class="cline"><span class="cl">Roof area (' + sl[S.slopeGroup] + ')</span><span class="cv">' + c.a.toLocaleString() + ' ft²</span></div>' +
+        '<div class="cline"><span class="cl">Shingles (' + tl[S.tier] + ')</span><span class="cv">' + $$(c.shingle) + '</span></div>' +
+        '<div class="cline"><span class="cl">Underlayment (' + ul[S.underlayment] + ')</span><span class="cv">' + (c.under > 0 ? '+'+$$(c.under) : 'Included') + '</span></div>' +
+        '<div class="cline"><span class="cl">Ventilation (' + vl[S.ventType] + ')</span><span class="cv">' + (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>' +
+        '<div class="cline"><span class="cl">Eavestroughs &amp; downspouts</span><span class="cv">' + $$(c.eaveBase) + '</span></div>';
+      if (S.addCaps) html += '<div class="cline"><span class="cl">Leaf guard caps</span><span class="cv">+' + $$(c.caps) + '</span></div>';
+      html += '<div class="cline ctotal"><span>Total Estimate</span><span class="cv">' + $$(c.total) + '</span></div>';
+
+      document.getElementById('sb-lines').innerHTML = html;
+      document.getElementById('sb-addr').textContent  = S.address;
+      document.getElementById('mob-tot').textContent  = $$(c.total);
+      document.getElementById('mob-sqft').textContent = c.a.toLocaleString();
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       SELECTORS
+    ══════════════════════════════════════════════════════════════════ */
+    function selSlopeGroup(g) {
+      S.slopeGroup = g;
+      ['standard','steep','verySteep'].forEach(function(x){
+        document.getElementById('sg-'+x).classList.toggle('sel', x===g);
+      });
+      updateCalc();
+    }
+
+    function selectTier(t) {
+      S.tier = t;
+      ['good','better','best'].forEach(function(x){
+        document.getElementById('tc-'+x).classList.toggle('sel', x===t);
+      });
+      updateCalc();
+    }
+
+    function selUnder(t) {
+      S.underlayment = t;
+      document.getElementById('oc-us').classList.toggle('sel', t==='standard');
+      document.getElementById('oc-uf').classList.toggle('sel', t==='full');
+      updateCalc();
+    }
+
+    function selVent(t) {
+      S.ventType = t; S.ventQty = 1;
+      ['standard','box','turbine','solar'].forEach(function(x){
+        document.getElementById('ov-'+x).classList.toggle('sel', x===t);
+      });
+      ['box','turbine','solar'].forEach(function(x){
+        document.getElementById('qr-'+x).style.display = (x===t) ? 'flex' : 'none';
+      });
+      refreshVentPrices();
+      updateCalc();
+    }
+
+    function chgQty(d) {
+      S.ventQty = Math.max(1, S.ventQty + d);
+      ['qn1','qn2','qn3'].forEach(function(id){ document.getElementById(id).textContent = S.ventQty; });
+      refreshVentPrices();
+      updateCalc();
+    }
+
+    function refreshVentPrices() {
+      var q = S.ventQty;
+      document.getElementById('vp-box').textContent     = $$(q===1 ? 300 : q*250);
+      document.getElementById('vp-turbine').textContent = $$(q * P.vent.turbine);
+      document.getElementById('vp-solar').textContent   = $$(q * P.vent.solar);
+    }
+
+    function selStories(n) {
+      S.stories = n;
+      [1,2,3].forEach(function(i){ document.getElementById('sb'+i).classList.toggle('sel', i===n); });
+      renderEaveBox();
+      updateCalc();
+    }
+
+    function onCapsChange() {
+      S.addCaps = document.getElementById('capsChk').checked;
+      document.getElementById('caps-card').classList.toggle('on', S.addCaps);
+      updateCalc();
+    }
+
+    function onHomeTypeChange() {
+      S.homeType = document.getElementById('homeType').value;
+      if (!S.perimeterFt) {
+        document.getElementById('footprint').value = P.htDef[S.homeType];
+        updateCalc();
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════════════════════════════════ */
+    function goTo(step) {
+      S.step = step;
+      for (var i = 1; i <= 5; i++) {
+        var el = document.getElementById('step-' + i);
+        if (el) el.style.display = (i === step) ? 'block' : 'none';
+      }
+      for (var i = 1; i <= 5; i++) {
+        var ws = document.getElementById('ws' + i);
+        if (!ws) continue;
+        ws.classList.remove('active','done');
+        if (i < step) ws.classList.add('done');
+        else if (i === step) ws.classList.add('active');
+      }
+      for (var i = 1; i <= 4; i++) {
+        var wl = document.getElementById('wl' + i);
+        if (wl) wl.classList.toggle('done', i < step);
+      }
+      if (step === 5) buildSummary();
+      if (step === 1) {
+        tryInitMap();
+        if (leafletMap) leafletMap.invalidateSize();
+      }
+      window.scrollTo({ top: document.getElementById('wizard-wrap').getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' });
+      updateCalc();
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       LEAD CAPTURE
+    ══════════════════════════════════════════════════════════════════ */
+    function startEstimate() {
+      var name  = document.getElementById('l_name').value.trim();
+      var phone = document.getElementById('l_phone').value.trim();
+      var email = document.getElementById('l_email').value.trim();
+      var addr  = document.getElementById('l_address').value.trim();
+      var err   = document.getElementById('leadErr');
+
+      if (!name)  { err.textContent='Please enter your full name.';            err.style.display='block'; return; }
+      if (!phone) { err.textContent='Please enter your phone number.';         err.style.display='block'; return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent='Please enter a valid email address.'; err.style.display='block'; return; }
+      if (!addr)  { err.textContent='Please enter your property address.';     err.style.display='block'; return; }
+      if (!S.addrConfirmed || !S.lat || !S.lng) {
+        err.textContent = 'Please select your address from the suggestions list.';
+        err.style.display = 'block';
+        document.getElementById('l_address').focus();
+        setAddrStatus('err', 'Select your address from the suggestions list');
+        return;
+      }
+      err.style.display = 'none';
+
+      S.name = name; S.email = email; S.phone = phone; S.address = addr;
+      document.getElementById('panel-lead').style.display = 'none';
+      document.getElementById('wizard-wrap').style.display = 'block';
+      document.getElementById('mob-bar').style.removeProperty('display');
+
+      goTo(1);
+      // If autocomplete already set lat/lng, init map immediately; otherwise geocode
+      if (S.lat && S.lng) {
+        tryInitMap();
+        fetchPropData(S.address, S.lat, S.lng);
+      } else {
+        hereGeocode(addr);
+      }
+    }
+
+    function startOver() {
+      Object.assign(S, {
+        name:'', email:'', phone:'', address:'', lat:null, lng:null, addrConfirmed:false,
+        homeType:'detached', footprint:1500, slopeGroup:'standard', tier:'better',
+        underlayment:'standard', ventType:'standard', ventQty:1,
+        stories:1, addCaps:false, perimeterFt:null, pendingPolygon:null,
+        step:0, mapInit:false,
+      });
+      document.getElementById('wizard-wrap').style.display  = 'none';
+      document.getElementById('panel-lead').style.display   = 'block';
+      document.getElementById('mob-bar').style.setProperty('display','none','important');
+      ['l_name','l_phone','l_email','l_address'].forEach(function(id){ document.getElementById(id).value=''; });
+      document.getElementById('leadErr').style.display = 'none';
+      setAddrStatus('');
+      document.getElementById('footprint-badge').classList.add('hidden');
+      document.getElementById('perim-source-note').classList.add('hidden');
+      document.getElementById('prop-details-panel').classList.add('hidden');
+      document.getElementById('prop-details-rows').innerHTML = '';
+      if (buildingLayer && leafletMap) { leafletMap.removeLayer(buildingLayer); buildingLayer = null; }
+      if (leafletMap) { leafletMap.remove(); leafletMap = null; }
+      document.getElementById('propertyMap').style.display = 'none';
+      document.getElementById('map-ph').style.display = 'block';
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       HERE GEOCODING & SEARCH  +  LEAFLET MAP
+       API key lives in .env / Vercel env vars — never in browser code.
+       Autocomplete + geocode are proxied through /api/here-*.
+       Satellite tiles use ESRI World Imagery (free, no key required).
+    ══════════════════════════════════════════════════════════════════ */
+    var leafletMap, buildingLayer, hereTimer, hereSuggestions = [], hereActiveIdx = -1;
+
+    /* ── Address confirmation state ─────────────────────────────────── */
+    function setAddrStatus(state, msg) {
+      var inp   = document.getElementById('l_address');
+      var badge = document.getElementById('addr-status');
+      inp.classList.remove('addr-ok', 'addr-err');
+      badge.className = 'addr-status';
+      badge.innerHTML = '';
+      if (!state) return;
+      var icons = { ok:'ion-ios-checkmark-circle', err:'ion-ios-close-circle', loading:'ion-ios-search' };
+      var classes = { ok:'show-ok', err:'show-err', loading:'show-loading' };
+      if (state === 'ok')  inp.classList.add('addr-ok');
+      if (state === 'err') inp.classList.add('addr-err');
+      badge.className = 'addr-status ' + (classes[state] || '');
+      badge.innerHTML = '<i class="' + icons[state] + '"></i> ' + msg;
+    }
+
+    /* ── HERE Autocomplete ──────────────────────────────────────────── */
+    function hereInput(val) {
+      clearTimeout(hereTimer);
+      // Invalidate confirmation whenever the user edits the field
+      S.addrConfirmed = false;
+      S.lat = null;
+      S.lng = null;
+      setAddrStatus('');
+      if (val.length < 3) { hereCloseDd(); return; }
+      hereTimer = setTimeout(function(){ hereFetchSuggestions(val); }, 280);
+    }
+
+    function hereShowLoading() {
+      var dd = document.getElementById('here-dd');
+      dd.innerHTML = '<div class="here-msg">'
+        + '<span style="display:inline-block;width:12px;height:12px;border:2px solid #ccc;border-top-color:var(--ep);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:7px;"></span>'
+        + 'Searching Ontario addresses…</div>';
+      dd.style.display = 'block';
+    }
+
+    async function hereFetchSuggestions(q) {
+      hereShowLoading();
+      try {
+        var r = await fetch('/api/here-autocomplete?q=' + encodeURIComponent(q));
+        if (!r.ok) throw new Error('API ' + r.status);
+        var d = await r.json();
+        hereSuggestions = d.items || [];
+        hereActiveIdx = -1;
+        hereShowDd();
+      } catch(e) {
+        hereSuggestions = [];
+        var dd = document.getElementById('here-dd');
+        // Show a notice instead of silently vanishing — helps diagnose deployment issues
+        dd.innerHTML = '<div class="here-msg here-msg-err">Address suggestions unavailable — type your full address and tab away to continue.</div>';
+        dd.style.display = 'block';
+      }
+    }
+
+    function hereShowDd() {
+      var dd = document.getElementById('here-dd');
+      if (!hereSuggestions.length) {
+        dd.innerHTML = '<div class="here-msg">No Ontario addresses found — try a different spelling.</div>';
+        dd.style.display = 'block';
+        return;
+      }
+      dd.innerHTML = hereSuggestions.map(function(item, i) {
+        var parts = item.title.split(',');
+        var main  = parts[0] || item.title;
+        var sub   = parts.slice(1).join(',').trim();
+        return '<div class="here-item" data-i="' + i + '" onmousedown="hereSelect(' + i + ')">'
+          + '<div class="hi-main">' + main + '</div>'
+          + (sub ? '<div class="hi-sub">' + sub + '</div>' : '')
+          + '</div>';
+      }).join('');
+      dd.style.display = 'block';
+    }
+
+    function hereSelect(idx) {
+      var item = hereSuggestions[idx];
+      if (!item) return;
+      document.getElementById('l_address').value = item.title;
+      S.address = item.title;
+      hereCloseDd();
+      if (item.position) {
+        S.lat = item.position.lat;
+        S.lng = item.position.lng;
+        S.addrConfirmed = true;
+        setAddrStatus('ok', 'Address confirmed');
+        fetchPropData(S.address, S.lat, S.lng);
+      } else {
+        setAddrStatus('loading', 'Looking up address…');
+        hereGeocode(item.title);
+      }
+    }
+
+    function hereCloseDd() {
+      document.getElementById('here-dd').style.display = 'none';
+    }
+
+    function hereFocus() {
+      var val = document.getElementById('l_address').value.trim();
+      // Re-open dropdown if field has enough text but no confirmation yet
+      if (val.length >= 3 && !S.addrConfirmed) {
+        if (hereSuggestions.length) {
+          hereShowDd();  // results already in memory — show immediately
+        } else {
+          hereFetchSuggestions(val);  // fetch fresh results
+        }
+      }
+    }
+
+    function hereBlur() {
+      setTimeout(function() {
+        hereCloseDd();
+        // If user typed but never picked a suggestion, try geocoding what they entered
+        var val = document.getElementById('l_address').value.trim();
+        if (val.length >= 6 && !S.addrConfirmed) {
+          setAddrStatus('loading', 'Looking up address…');
+          hereGeocode(val);
+        }
+      }, 200);
+    }
+
+    function hereKeyDown(e) {
+      var items = document.querySelectorAll('.here-item');
+      if (!items.length) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        hereActiveIdx = Math.min(hereActiveIdx + 1, items.length - 1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        hereActiveIdx = Math.max(hereActiveIdx - 1, 0);
+      } else if (e.key === 'Enter' && hereActiveIdx >= 0) {
+        e.preventDefault();
+        hereSelect(hereActiveIdx);
+        return;
+      } else if (e.key === 'Escape') {
+        hereCloseDd(); return;
+      }
+      items.forEach(function(el, i){
+        el.classList.toggle('hi-active', i === hereActiveIdx);
+      });
+    }
+
+    /* ── HERE Geocoding (proxied through /api/here-geocode) ────────── */
+    async function hereGeocode(addr) {
+      try {
+        var r = await fetch('/api/here-geocode?q=' + encodeURIComponent(addr));
+        var d = await r.json();
+        var pos = (d.items || [])[0]?.position;
+        if (pos) {
+          S.lat = pos.lat;
+          S.lng = pos.lng;
+          S.addrConfirmed = true;
+          setAddrStatus('ok', 'Address confirmed');
+          fetchPropData(S.address || addr, S.lat, S.lng);
+        } else {
+          S.addrConfirmed = false;
+          setAddrStatus('err', 'Address not found — please select from the list');
+        }
+      } catch(e) {
+        setAddrStatus('err', 'Address not found — please select from the list');
+      }
+    }
+
+    /* ── Leaflet map with ESRI World Imagery satellite tiles (no key) ─ */
+    function tryInitMap() {
+      if (S.mapInit || !S.lat || !S.lng) return;
+
+      // Don't init on a hidden container — Leaflet renders zero-size and never recovers.
+      // This function is safe to call early; it will re-run when Step 1 becomes visible.
+      var mapEl = document.getElementById('propertyMap');
+      if (!mapEl || mapEl.offsetParent === null) return;
+
+      S.mapInit = true;
+      document.getElementById('map-ph').style.display = 'none';
+      mapEl.style.display = 'block';
+
+      leafletMap = L.map('propertyMap', { zoomControl:true, attributionControl:true });
+
+      L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        { attribution:'Tiles &copy; Esri &mdash; Esri, USDA, USGS, AEX, GeoEye', maxZoom:20 }
+      ).addTo(leafletMap);
+
+      leafletMap.setView([S.lat, S.lng], 19);
+      L.marker([S.lat, S.lng]).addTo(leafletMap);
+
+      // Draw polygon that arrived while map was not yet ready
+      if (S.pendingPolygon) {
+        drawBuildingPolygon(S.pendingPolygon);
+        S.pendingPolygon = null;
+      }
+    }
+
+    /* Draw the building polygon returned by the API on the Leaflet map */
+    function drawBuildingPolygon(coords) {
+      if (!leafletMap) return;
+      if (buildingLayer) leafletMap.removeLayer(buildingLayer);
+
+      // coords is [[lon, lat], ...] — Leaflet needs [lat, lon]
+      var latLngs = coords.map(function(c){ return [c[1], c[0]]; });
+      buildingLayer = L.polygon(latLngs, {
+        color:'#F96D00', weight:2, fillColor:'#F96D00', fillOpacity:0.2
+      }).addTo(leafletMap);
+
+      leafletMap.fitBounds(buildingLayer.getBounds(), { padding:[20, 20] });
+    }
+
+    /* ──────────────────────────────────────────────────────────────────
+       Fetch all building polygons from API (house + garage + outbuildings)
+       and display per-building breakdown with combined totals
+    ────────────────────────────────────────────────────────────────── */
+    async function fetchPropData(addr, lat, lng) {
+      if (!lat || !lng) return;
+      document.getElementById('data-spin').style.display = 'block';
+      // Show loading state immediately so user knows something is happening
+      var panel = document.getElementById('prop-details-panel');
+      panel.classList.remove('hidden');
+      document.getElementById('prop-details-rows').innerHTML =
+        '<tr><td colspan="3" style="color:#888;padding:10px 8px;">'
+        + '<span style="display:inline-block;width:14px;height:14px;border:2px solid #ccc;border-top-color:var(--ep);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;"></span>'
+        + 'Detecting property…</td></tr>';
+      try {
+        var r = await fetch('/api/get-property', {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json' },
+          body: JSON.stringify({ address:addr, lat:lat, lng:lng }),
+        });
+        if (!r.ok) throw new Error('API error');
+        var d = await r.json();
+
+        if (d.buildings && d.buildings.length) {
+          // Use server-computed totals (spherical excess + Haversine)
+          S.footprint   = d.footprintSqFt;
+          S.perimeterFt = d.perimeterFt;
+
+          document.getElementById('footprint').value = d.footprintSqFt;
+          document.getElementById('footprint-badge').classList.remove('hidden');
+          document.getElementById('perim-source-note').classList.remove('hidden');
+
+          showPropDetails(d.buildings, d.footprintSqFt, d.perimeterFt);
+
+          // Draw outline — or stash it if map isn't initialised yet
+          if (d.polygon) {
+            if (leafletMap) drawBuildingPolygon(d.polygon);
+            else S.pendingPolygon = d.polygon;
+          }
+        }
+      } catch(e) { /* silent fallback — user keeps manual defaults */ }
+      document.getElementById('data-spin').style.display = 'none';
+      updateCalc();
+    }
+
+    /* Render the per-building breakdown table inside prop-details-panel */
+    function showPropDetails(buildings, totalSqFt, totalPerim) {
+      var tbody = document.getElementById('prop-details-rows');
+      if (!tbody) return;
+
+      var rows = buildings.map(function(b) {
+        return '<tr>'
+          + '<td>' + b.label + '</td>'
+          + '<td>' + b.footprintSqFt.toLocaleString() + ' sq ft</td>'
+          + '<td>' + b.perimeterFt.toLocaleString() + ' ft</td>'
+          + '</tr>';
+      }).join('');
+
+      if (buildings.length > 1) {
+        rows += '<tr class="pd-total">'
+          + '<td>Total</td>'
+          + '<td>' + totalSqFt.toLocaleString() + ' sq ft</td>'
+          + '<td>' + totalPerim.toLocaleString() + ' ft</td>'
+          + '</tr>';
+      }
+
+      tbody.innerHTML = rows;
+      document.getElementById('prop-details-panel').classList.remove('hidden');
+    }
+
+    /* Fallback: only show "map unavailable" if address was geocoded but map still failed */
+    setTimeout(function() {
+      if (!S.mapInit && S.lat && S.lng) {
+        var ph = document.getElementById('map-ph');
+        if (ph && ph.style.display !== 'none') {
+          ph.innerHTML = '<span style="font-size:32px;">📍</span><span>Map unavailable — enter your home size below</span>';
+        }
+      }
+    }, 6000);
+
+    /* ══════════════════════════════════════════════════════════════════
+       SUMMARY
+    ══════════════════════════════════════════════════════════════════ */
+    function buildSummary() {
+      var c = costs();
+      document.getElementById('sum-name').textContent  = S.name;
+      document.getElementById('sum-addr').textContent  = S.address;
+      document.getElementById('sum-total').textContent = $$(c.total);
+      document.getElementById('sum-lo').textContent    = $$(c.total * 0.85);
+      document.getElementById('sum-hi').textContent    = $$(c.total * 1.15);
+
+      var sl = { standard:'Standard slope ×1.2 (0°–30°)', steep:'Steep slope ×1.4 (31°–40°)', verySteep:'Very steep slope ×1.5 (41°+)' };
+      var tl = { good:'Good — 30-yr Architectural (IKO / BP)', better:'Better — 40-yr Dimensional (GAF / Owens Corning)', best:'Best — 50-yr Premium (CertainTeed / GAF HDZ)' };
+      var vl = { standard:'Standard plastic vents (included)', box:'Tower/Box vents &times;'+S.ventQty, turbine:'Turbine vents &times;'+S.ventQty, solar:'Solar panel vents &times;'+S.ventQty };
+      var dataNote = S.perimeterFt ? ' <span style="color:#28a745;font-size:10px;font-weight:600;">&#10003; from building outline</span>' : ' (estimated)';
+
+      document.getElementById('sum-breakdown').innerHTML =
+        '<div class="brow bhdr"><span>Item</span><span>Cost</span></div>' +
+        '<div class="brow"><span>Shingles &amp; Labour<br><small style="color:#999;">' +
+          c.a.toLocaleString() + ' sq ft &bull; ' + sl[S.slopeGroup] + ' &bull; ' + S.homeType +
+        '</small></span><span class="bv">' + $$(c.shingle) + '</span></div>' +
+        '<div class="brow"><span>' + tl[S.tier] + '</span><span class="bv">Included</span></div>' +
+        '<div class="brow"><span>Underlayment<br><small style="color:#999;">' +
+          (S.underlayment === 'full' ? 'Full roof coverage' : 'Standard 3-ft perimeter (code min.)') +
+        '</small></span><span class="bv">' + (c.under > 0 ? '+'+$$(c.under) : 'Included') + '</span></div>' +
+        '<div class="brow"><span>Ventilation<br><small style="color:#999;">' + vl[S.ventType] + '</small></span><span class="bv">' +
+          (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>' +
+        '<div class="brow"><span>Eavestroughs &amp; Downspouts<br><small style="color:#999;">' +
+          c.pm + ' ft perimeter' + dataNote + ' + ' + c.ds + ' ft downspouts &times; $8/ft' +
+        '</small></span><span class="bv">' + $$(c.eaveBase) + '</span></div>' +
+        (S.addCaps ? '<div class="brow"><span>Leaf Guard Caps<br><small style="color:#999;">' + c.pm + ' ft &times; $5/ft</small></span><span class="bv">+' + $$(c.caps) + '</span></div>' : '');
+
+      renderSidebar();
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       INIT
+    ══════════════════════════════════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCalc();
+      document.getElementById('caps-card').addEventListener('click', function(e) {
+        if (!e.target.closest('.tog-wrap')) {
+          var chk = document.getElementById('capsChk');
+          chk.checked = !chk.checked;
+          onCapsChange();
+        }
+      });
+    });
+    </script>
+
+  </body>
+</html>
