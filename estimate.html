@@ -965,13 +965,9 @@
       document.getElementById('mob-bar').style.removeProperty('display');
 
       goTo(1);
-      // If autocomplete already set lat/lng, init map immediately; otherwise geocode
-      if (S.lat && S.lng) {
-        tryInitMap();
-        fetchPropData(S.address, S.lat, S.lng);
-      } else {
-        hereGeocode(addr);
-      }
+      // fetchPropData was already called when the address was confirmed (hereSelect/hereGeocode).
+      // Just init the map now that the container is visible.
+      tryInitMap();
     }
 
     function startOver() {
@@ -1255,8 +1251,14 @@
             if (leafletMap) drawBuildingPolygon(d.polygon);
             else S.pendingPolygon = d.polygon;
           }
+        } else {
+          // No building data in OSM — hide the panel so user isn't left with a spinner
+          panel.classList.add('hidden');
         }
-      } catch(e) { /* silent fallback — user keeps manual defaults */ }
+      } catch(e) {
+        // API error — hide the loading panel so user isn't left with a spinner
+        panel.classList.add('hidden');
+      }
       document.getElementById('data-spin').style.display = 'none';
       updateCalc();
     }
