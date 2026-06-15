@@ -32,10 +32,20 @@ module.exports = async function handler(req, res) {
     // out geom qt returns coordinates inline — no node expansion pass needed
     // 30m radius is sufficient for GTA lots (houses + attached/detached garages)
     const q = `[out:json][timeout:8];way[building](around:30,${lat},${lng});out geom qt;`;
-    const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(q)}`;
+    const OVERPASS_ENDPOINTS = [
+      'https://overpass-api.de/api/interpreter',
+      'https://overpass.kumi.systems/api/interpreter',
+      'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
+    ];
 
-    const r = await fetch(url, { signal: AbortSignal.timeout(9000) });
-    if (!r.ok) throw new Error('Overpass HTTP ' + r.status);
+    let r;
+    for (const endpoint of OVERPASS_ENDPOINTS) {
+      try {
+        r = await fetch(`${endpoint}?data=${encodeURIComponent(q)}`, { signal: AbortSignal.timeout(9000) });
+        if (r.ok) break;
+      } catch (_) { /* try next */ }
+    }
+    if (!r || !r.ok) throw new Error('All Overpass endpoints failed');
 
     const data = await r.json();
     const elements = data.elements || [];
