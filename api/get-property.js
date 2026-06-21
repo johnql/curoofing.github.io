@@ -69,32 +69,51 @@ module.exports = async function handler(req, res) {
 
       const areaSqFt = Math.round(polygonAreaM2(coords) * 10.7639);
       const perimFt  = Math.round(polygonPerimM(coords)  * 3.28084);
-      const tag      = (w.tags && w.tags.building) || 'yes';
+      const tags     = w.tags || {};
+      const tag      = tags.building || 'yes';
       const label    = GARAGE_TAGS.test(tag) ? 'Garage / Outbuilding' : 'Main Building';
 
-      return { label, footprintSqFt: areaSqFt, perimeterFt: perimFt, polygon: coords };
+      return { label, footprintSqFt: areaSqFt, perimeterFt: perimFt, polygon: coords, osmId: w.id, osmTags: tags };
     }).filter(Boolean);
 
     if (buildings.length === 0) {
       return res.status(200).json({ footprintSqFt: null, perimeterFt: null, polygon: null, buildings: [], source: 'bad-polygon' });
     }
 
-    // Sort: largest main building first, then garages
-    buildings.sort((a, b) => {
-      const aGarage = a.label !== 'Main Building';
-      const bGarage = b.label !== 'Main Building';
-      if (aGarage !== bGarage) return aGarage ? 1 : -1;
-      return b.footprintSqFt - a.footprintSqFt;
-    });
+    // Filter to only the user's property:
+    //   1. Find the non-garage building whose centroid is closest to the geocoded point → user's house
+    //   2. Include garages within 20m of that building's centroid → user's detached garage
+    //   3. Discard all other buildings (neighbours grabbed by the radius)
+    const lngRef = parseFloat(lng), latRef = parseFloat(lat);
 
-    const footprintSqFt = buildings.reduce((s, b) => s + b.footprintSqFt, 0);
-    const perimeterFt   = buildings.reduce((s, b) => s + b.perimeterFt,   0);
+    const mainCandidates = buildings.filter(b => b.label === 'Main Building');
+    const garages        = buildings.filter(b => b.label !== 'Main Building');
+
+    if (mainCandidates.length === 0) {
+      return res.status(200).json({ footprintSqFt: null, perimeterFt: null, polygon: null, buildings: [], source: 'not-found' });
+    }
+
+    // Pick the house whose centroid is nearest the geocoded coordinate
+    mainCandidates.forEach(b => { b._dist = distM(lngRef, latRef, ...centroidOf(b.polygon)); });
+    mainCandidates.sort((a, b) => a._dist - b._dist);
+    const userHouse = mainCandidates[0];
+
+    // Attach garages that are within 20m of the house centroid
+    const houseCentroid = centroidOf(userHouse.polygon);
+    const nearbyGarages = garages.filter(g => distM(...houseCentroid, ...centroidOf(g.polygon)) <= 20);
+
+    // Build final list: house first, then its garages sorted by size desc
+    nearbyGarages.sort((a, b) => b.footprintSqFt - a.footprintSqFt);
+    const result = [userHouse, ...nearbyGarages];
+
+    const footprintSqFt = result.reduce((s, b) => s + b.footprintSqFt, 0);
+    const perimeterFt   = result.reduce((s, b) => s + b.perimeterFt,   0);
 
     return res.status(200).json({
       footprintSqFt,
       perimeterFt,
-      polygon:   buildings[0].polygon,   // main/largest building for map overlay
-      buildings,
+      polygon:   userHouse.polygon,
+      buildings: result,
       source: 'msft-osm',
     });
 
@@ -102,6 +121,24 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ footprintSqFt: null, perimeterFt: null, polygon: null, buildings: [], source: 'error' });
   }
 };
+
+// ── Polygon centroid [lon, lat] ───────────────────────────────────────────────
+function centroidOf(coords) {
+  const n = coords.length - 1; // closed ring — skip duplicate last point
+  let sumLon = 0, sumLat = 0;
+  for (let i = 0; i < n; i++) { sumLon += coords[i][0]; sumLat += coords[i][1]; }
+  return [sumLon / n, sumLat / n];
+}
+
+// ── Haversine point-to-point distance in metres ───────────────────────────────
+function distM(lon1, lat1, lon2, lat2) {
+  const R = 6371000;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
 
 // ── Spherical excess formula — polygon area in square metres ──────────────────
 function polygonAreaM2(coords) {

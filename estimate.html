@@ -197,9 +197,11 @@
       .prop-details-panel .pd-title { font-size:11px;font-weight:700;color:#155724;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px; }
       .prop-details-tbl { width:100%;border-collapse:collapse;font-size:13px; }
       .prop-details-tbl th { color:#888;font-weight:600;font-size:11px;text-transform:uppercase;padding:3px 8px 7px;border-bottom:1px solid #dee2e6;text-align:left; }
-      .prop-details-tbl th:not(:first-child) { text-align:right; }
+      .prop-details-tbl th:nth-child(n+4) { text-align:right; }
       .prop-details-tbl td { padding:5px 8px;color:#333; }
-      .prop-details-tbl td:not(:first-child) { text-align:right;font-variant-numeric:tabular-nums; }
+      .prop-details-tbl td:nth-child(n+4) { text-align:right;font-variant-numeric:tabular-nums; }
+      .prop-details-tbl .pd-osm-tag { font-size:11px;color:#888;font-family:monospace; }
+      .prop-details-tbl .pd-addr { font-size:11px;color:#555; max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
       .prop-details-tbl .pd-total td { font-weight:700;border-top:1px solid #dee2e6;padding-top:8px;color:var(--ep-dark); }
 
       @keyframes spin { to { transform:rotate(360deg); } }
@@ -340,6 +342,8 @@
             <thead>
               <tr>
                 <th>Building</th>
+                <th>OSM Type</th>
+                <th>Address</th>
                 <th>Footprint</th>
                 <th>Perimeter</th>
               </tr>
@@ -1269,8 +1273,14 @@
       if (!tbody) return;
 
       var rows = buildings.map(function(b) {
+        var tags = b.osmTags || {};
+        var osmTag = tags.building || '—';
+        var addrParts = [tags['addr:housenumber'], tags['addr:street']].filter(Boolean);
+        var addr = addrParts.length ? addrParts.join(' ') : (tags['name'] || '—');
         return '<tr>'
           + '<td>' + b.label + '</td>'
+          + '<td class="pd-osm-tag">' + osmTag + '</td>'
+          + '<td class="pd-addr" title="' + addr + '">' + addr + '</td>'
           + '<td>' + b.footprintSqFt.toLocaleString() + ' sq ft</td>'
           + '<td>' + b.perimeterFt.toLocaleString() + ' ft</td>'
           + '</tr>';
@@ -1278,7 +1288,7 @@
 
       if (buildings.length > 1) {
         rows += '<tr class="pd-total">'
-          + '<td>Total</td>'
+          + '<td colspan="3">Total</td>'
           + '<td>' + totalSqFt.toLocaleString() + ' sq ft</td>'
           + '<td>' + totalPerim.toLocaleString() + ' ft</td>'
           + '</tr>';

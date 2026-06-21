@@ -105,24 +105,40 @@ describe('get-property handler', () => {
     expect(res._body.buildings[0].label).toBe('Main Building');
   });
 
-  test('classifies building=garage as Garage / Outbuilding', async () => {
+  test('classifies building=garage as Garage / Outbuilding when paired with a house', async () => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      json: async () => overpassResponse([
+        makeWay(1, { building: 'house' },  HOUSE_POLYGON),
+        makeWay(2, { building: 'garage' }, GARAGE_POLYGON),
+      ]),
+    });
+    const res = makeRes();
+    await handler(makeReq({ lat: 43.7, lng: -79.4 }), res);
+    expect(res._body.buildings[1].label).toBe('Garage / Outbuilding');
+  });
+
+  test('classifies building=shed as Garage / Outbuilding when paired with a house', async () => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      json: async () => overpassResponse([
+        makeWay(1, { building: 'house' },  HOUSE_POLYGON),
+        makeWay(2, { building: 'shed' },   GARAGE_POLYGON),
+      ]),
+    });
+    const res = makeRes();
+    await handler(makeReq({ lat: 43.7, lng: -79.4 }), res);
+    expect(res._body.buildings[1].label).toBe('Garage / Outbuilding');
+  });
+
+  test('returns not-found when only outbuildings exist (no main building)', async () => {
     global.fetch.mockResolvedValue({
       ok: true,
       json: async () => overpassResponse([makeWay(1, { building: 'garage' }, GARAGE_POLYGON)]),
     });
     const res = makeRes();
     await handler(makeReq({ lat: 43.7, lng: -79.4 }), res);
-    expect(res._body.buildings[0].label).toBe('Garage / Outbuilding');
-  });
-
-  test('classifies building=shed as Garage / Outbuilding', async () => {
-    global.fetch.mockResolvedValue({
-      ok: true,
-      json: async () => overpassResponse([makeWay(1, { building: 'shed' }, GARAGE_POLYGON)]),
-    });
-    const res = makeRes();
-    await handler(makeReq({ lat: 43.7, lng: -79.4 }), res);
-    expect(res._body.buildings[0].label).toBe('Garage / Outbuilding');
+    expect(res._body).toMatchObject({ buildings: [], source: 'not-found' });
   });
 
   test('sorts main building before garage in results', async () => {
