@@ -335,23 +335,6 @@
           </div>
         </div>
 
-        <!-- Property details: shown as soon as the address is geocoded -->
-        <div id="prop-details-panel" class="prop-details-panel hidden">
-          <div class="pd-title"><i class="ion-ios-locate"></i> Property detected from building outline</div>
-          <table class="prop-details-tbl">
-            <thead>
-              <tr>
-                <th>Building</th>
-                <th>OSM Type</th>
-                <th>Address</th>
-                <th>Footprint</th>
-                <th>Perimeter</th>
-              </tr>
-            </thead>
-            <tbody id="prop-details-rows"></tbody>
-          </table>
-        </div>
-
         <!-- WIZARD -->
         <div id="wizard-wrap" style="display:none;">
 
@@ -394,6 +377,23 @@
                 <div id="data-spin" class="data-spin">
                   <div class="spinner-border text-warning" style="width:1.3rem;height:1.3rem;" role="status"></div>
                   &nbsp;Detecting building outline&hellip;
+                </div>
+
+                <!-- Property details — shown after address is geocoded -->
+                <div id="prop-details-panel" class="prop-details-panel hidden">
+                  <div class="pd-title"><i class="ion-ios-locate"></i> Property detected from building outline</div>
+                  <table class="prop-details-tbl">
+                    <thead>
+                      <tr>
+                        <th>Building</th>
+                        <th>OSM Type</th>
+                        <th>Address</th>
+                        <th>Footprint</th>
+                        <th>Perimeter</th>
+                      </tr>
+                    </thead>
+                    <tbody id="prop-details-rows"></tbody>
+                  </table>
                 </div>
 
                 <div class="row">
@@ -969,9 +969,8 @@
       document.getElementById('mob-bar').style.removeProperty('display');
 
       goTo(1);
-      // fetchPropData was already called when the address was confirmed (hereSelect/hereGeocode).
-      // Just init the map now that the container is visible.
       tryInitMap();
+      fetchPropData(S.address, S.lat, S.lng);
     }
 
     function startOver() {
@@ -1093,7 +1092,6 @@
         S.lng = item.position.lng;
         S.addrConfirmed = true;
         setAddrStatus('ok', 'Address confirmed');
-        fetchPropData(S.address, S.lat, S.lng);
       } else {
         setAddrStatus('loading', 'Looking up address…');
         hereGeocode(label);
@@ -1161,7 +1159,6 @@
           S.lng = pos.lng;
           S.addrConfirmed = true;
           setAddrStatus('ok', 'Address confirmed');
-          fetchPropData(S.address || addr, S.lat, S.lng);
         } else {
           S.addrConfirmed = false;
           setAddrStatus('err', 'Address not found in Ontario — check the spelling or select from the list');
@@ -1227,7 +1224,7 @@
       var panel = document.getElementById('prop-details-panel');
       panel.classList.remove('hidden');
       document.getElementById('prop-details-rows').innerHTML =
-        '<tr><td colspan="3" style="color:#888;padding:10px 8px;">'
+        '<tr><td colspan="5" style="color:#888;padding:10px 8px;">'
         + '<span style="display:inline-block;width:14px;height:14px;border:2px solid #ccc;border-top-color:var(--ep);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;"></span>'
         + 'Detecting property…</td></tr>';
       try {
@@ -1256,12 +1253,14 @@
             else S.pendingPolygon = d.polygon;
           }
         } else {
-          // No building data in OSM — hide the panel so user isn't left with a spinner
-          panel.classList.add('hidden');
+          document.getElementById('prop-details-rows').innerHTML =
+            '<tr><td colspan="5" style="color:#aaa;padding:10px 8px;font-style:italic;">'
+            + 'Building outline not found in map data — enter your home size below.</td></tr>';
         }
       } catch(e) {
-        // API error — hide the loading panel so user isn't left with a spinner
-        panel.classList.add('hidden');
+        document.getElementById('prop-details-rows').innerHTML =
+          '<tr><td colspan="5" style="color:#aaa;padding:10px 8px;font-style:italic;">'
+          + 'Could not retrieve building data — enter your home size below.</td></tr>';
       }
       document.getElementById('data-spin').style.display = 'none';
       updateCalc();
