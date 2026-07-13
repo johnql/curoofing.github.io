@@ -18,6 +18,7 @@ module.exports = async function handler(req, res) {
       + '&in=countryCode:CAN';
 
     const r = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    if (!r.ok) throw new Error('HERE HTTP ' + r.status);
     const d = await r.json();
     res.status(200).json(d);
   } catch (e) {

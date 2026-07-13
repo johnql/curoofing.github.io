@@ -197,9 +197,10 @@
       .prop-details-panel .pd-title { font-size:11px;font-weight:700;color:#155724;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px; }
       .prop-details-tbl { width:100%;border-collapse:collapse;font-size:13px; }
       .prop-details-tbl th { color:#888;font-weight:600;font-size:11px;text-transform:uppercase;padding:3px 8px 7px;border-bottom:1px solid #dee2e6;text-align:left; }
-      .prop-details-tbl th:nth-child(n+4) { text-align:right; }
+      .prop-details-tbl th:nth-child(n+5) { text-align:right; }
       .prop-details-tbl td { padding:5px 8px;color:#333; }
-      .prop-details-tbl td:nth-child(n+4) { text-align:right;font-variant-numeric:tabular-nums; }
+      .prop-details-tbl td:nth-child(n+5) { text-align:right;font-variant-numeric:tabular-nums; }
+      .prop-details-tbl .pd-source { font-size:11px;color:#888; }
       .prop-details-tbl .pd-osm-tag { font-size:11px;color:#888;font-family:monospace; }
       .prop-details-tbl .pd-addr { font-size:11px;color:#555; max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
       .prop-details-tbl .pd-total td { font-weight:700;border-top:1px solid #dee2e6;padding-top:8px;color:var(--ep-dark); }
@@ -386,8 +387,9 @@
                     <thead>
                       <tr>
                         <th>Building</th>
-                        <th>OSM Type</th>
+                        <th>Type</th>
                         <th>Address</th>
+                        <th>Source</th>
                         <th>Footprint</th>
                         <th>Perimeter</th>
                       </tr>
@@ -1224,7 +1226,7 @@
       var panel = document.getElementById('prop-details-panel');
       panel.classList.remove('hidden');
       document.getElementById('prop-details-rows').innerHTML =
-        '<tr><td colspan="5" style="color:#888;padding:10px 8px;">'
+        '<tr><td colspan="6" style="color:#888;padding:10px 8px;">'
         + '<span style="display:inline-block;width:14px;height:14px;border:2px solid #ccc;border-top-color:var(--ep);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;"></span>'
         + 'Detecting property…</td></tr>';
       try {
@@ -1245,7 +1247,7 @@
           document.getElementById('footprint-badge').classList.remove('hidden');
           document.getElementById('perim-source-note').classList.remove('hidden');
 
-          showPropDetails(d.buildings, d.footprintSqFt, d.perimeterFt);
+          showPropDetails(d.buildings, d.footprintSqFt, d.perimeterFt, d.source);
 
           // Draw outline — or stash it if map isn't initialised yet
           if (d.polygon) {
@@ -1254,12 +1256,12 @@
           }
         } else {
           document.getElementById('prop-details-rows').innerHTML =
-            '<tr><td colspan="5" style="color:#aaa;padding:10px 8px;font-style:italic;">'
+            '<tr><td colspan="6" style="color:#aaa;padding:10px 8px;font-style:italic;">'
             + 'Building outline not found in map data — enter your home size below.</td></tr>';
         }
       } catch(e) {
         document.getElementById('prop-details-rows').innerHTML =
-          '<tr><td colspan="5" style="color:#aaa;padding:10px 8px;font-style:italic;">'
+          '<tr><td colspan="6" style="color:#aaa;padding:10px 8px;font-style:italic;">'
           + 'Could not retrieve building data — enter your home size below.</td></tr>';
       }
       document.getElementById('data-spin').style.display = 'none';
@@ -1267,9 +1269,11 @@
     }
 
     /* Render the per-building breakdown table inside prop-details-panel */
-    function showPropDetails(buildings, totalSqFt, totalPerim) {
+    function showPropDetails(buildings, totalSqFt, totalPerim, source) {
       var tbody = document.getElementById('prop-details-rows');
       if (!tbody) return;
+
+      var sourceLabel = source === 'msft' ? 'Microsoft' : source === 'osm' ? 'OpenStreetMap' : '—';
 
       var rows = buildings.map(function(b) {
         var tags = b.osmTags || {};
@@ -1280,6 +1284,7 @@
           + '<td>' + b.label + '</td>'
           + '<td class="pd-osm-tag">' + osmTag + '</td>'
           + '<td class="pd-addr" title="' + addr + '">' + addr + '</td>'
+          + '<td class="pd-source">' + sourceLabel + '</td>'
           + '<td>' + b.footprintSqFt.toLocaleString() + ' sq ft</td>'
           + '<td>' + b.perimeterFt.toLocaleString() + ' ft</td>'
           + '</tr>';
@@ -1287,7 +1292,7 @@
 
       if (buildings.length > 1) {
         rows += '<tr class="pd-total">'
-          + '<td colspan="3">Total</td>'
+          + '<td colspan="4">Total</td>'
           + '<td>' + totalSqFt.toLocaleString() + ' sq ft</td>'
           + '<td>' + totalPerim.toLocaleString() + ' ft</td>'
           + '</tr>';
