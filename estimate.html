@@ -441,7 +441,7 @@
                     <div class="col-md-4 mb-2">
                       <div class="slope-card sel" id="sg-standard" onclick="selSlopeGroup('standard')">
                         <span class="slope-icon">🏠</span>
-                        <div class="slope-name">Standard</div>
+                        <div class="slope-name">Low</div>
                         <div class="slope-range">Flat to 7/12 &bull; 0°–30°</div>
                         <div class="slope-mult m-std">&times; 1.2 area multiplier</div>
                       </div>
@@ -449,7 +449,7 @@
                     <div class="col-md-4 mb-2">
                       <div class="slope-card" id="sg-steep" onclick="selSlopeGroup('steep')">
                         <span class="slope-icon">🏔️</span>
-                        <div class="slope-name">Steep</div>
+                        <div class="slope-name">Medium</div>
                         <div class="slope-range">8/12 to 10/12 &bull; 31°–40°</div>
                         <div class="slope-mult m-steep">&times; 1.4 area multiplier</div>
                       </div>
@@ -457,7 +457,7 @@
                     <div class="col-md-4 mb-2">
                       <div class="slope-card" id="sg-verySteep" onclick="selSlopeGroup('verySteep')">
                         <span class="slope-icon">⛰️</span>
-                        <div class="slope-name">Very Steep</div>
+                        <div class="slope-name">Steep</div>
                         <div class="slope-range">11/12 &amp; above &bull; 41°+</div>
                         <div class="slope-mult m-vst">&times; 1.5 area multiplier</div>
                       </div>
@@ -471,29 +471,48 @@
                   <div class="row">
                     <div class="col-md-4 mb-3">
                       <div class="tier-card" id="tc-good" onclick="selectTier('good')">
-                        <div class="tier-name">Good</div>
+                        <div class="tier-name">Standard</div>
                         <div class="tier-spec">30-year architectural</div>
-                        <div class="tier-spec" style="color:#bbb;">IKO / BP</div>
+                        <div class="tier-spec" style="color:#bbb;">$90 / package</div>
                         <div class="tier-price" id="tp-good">—</div>
                       </div>
                     </div>
                     <div class="col-md-4 mb-3">
                       <div class="tier-card pop sel" id="tc-better" onclick="selectTier('better')">
-                        <div class="tier-name">Better</div>
+                        <div class="tier-name">Premium</div>
                         <div class="tier-spec">40-year dimensional</div>
-                        <div class="tier-spec" style="color:#bbb;">GAF / Owens Corning</div>
+                        <div class="tier-spec" style="color:#bbb;">$105 / package</div>
                         <div class="tier-price" id="tp-better">—</div>
                       </div>
                     </div>
                     <div class="col-md-4 mb-3">
                       <div class="tier-card" id="tc-best" onclick="selectTier('best')">
-                        <div class="tier-name">Best</div>
+                        <div class="tier-name">Deluxe</div>
                         <div class="tier-spec">50-year premium</div>
-                        <div class="tier-spec" style="color:#bbb;">CertainTeed / GAF HDZ</div>
+                        <div class="tier-spec" style="color:#bbb;">$115 / package</div>
                         <div class="tier-price" id="tp-best">—</div>
                       </div>
                     </div>
                   </div>
+                </div>
+
+                <!-- Quote Calculation Summary -->
+                <div class="calc-box mt-3 mb-1" style="background:#fff8f3;border-color:#f9d0b4;padding:14px 16px;">
+                  <div class="row">
+                    <div class="col-sm-4 mb-2">
+                      <div style="font-size:10px;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:.4px;">Roofing Surface</div>
+                      <div><span class="calc-big" id="qc-area">—</span> <span style="font-size:13px;color:#888;">sq ft</span></div>
+                    </div>
+                    <div class="col-sm-4 mb-2">
+                      <div style="font-size:10px;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:.4px;">Shingle Packages</div>
+                      <div><span class="calc-big" id="qc-pkgs">—</span> <span style="font-size:13px;color:#888;">pkgs</span></div>
+                    </div>
+                    <div class="col-sm-4 mb-2">
+                      <div style="font-size:10px;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:.4px;">Shingle Cost Estimate</div>
+                      <div class="calc-big" id="qc-cost">—</div>
+                    </div>
+                  </div>
+                  <p class="mb-0 mt-2" style="font-size:11px;color:#aaa;line-height:1.5;">* The roofing replacement quote excludes the flat roofing surface. The quote includes the 3-foot industry underlayment for the main building.</p>
                 </div>
 
                 <div class="step-nav">
@@ -752,7 +771,7 @@
          Very Steep 41°+   (11/12 and above)        × 1.5
     ══════════════════════════════════════════════════════════════════ */
     var P = {
-      shingles:   { good:5.50, better:7.50, best:10.00 },  // $ per roof sq ft
+      shingles:   { good:90, better:105, best:115 },  // $ per package (covers 33.3 sq ft)
       underUpg:   0.75,                                     // $ per roof sq ft (full upgrade)
       vent:       { box:{ first:300, add:250 }, turbine:375, solar:650 },
       eave:       { perFt:8, capFt:5 },
@@ -765,6 +784,7 @@
        CALCULATIONS
     ══════════════════════════════════════════════════════════════════ */
     function roofArea() { return Math.round(S.footprint * P.slopeMult[S.slopeGroup]); }
+    function totalPkgs() { return parseFloat(((roofArea() / 33.3) + 2.5).toFixed(1)); }
 
     function perimFt() {
       if (S.perimeterFt) return S.perimeterFt;
@@ -773,7 +793,7 @@
 
     function costs() {
       var a = roofArea(), pm = perimFt(), ds = P.ds[S.stories];
-      var shingle = a * P.shingles[S.tier];
+      var shingle = totalPkgs() * P.shingles[S.tier];
       var under   = S.underlayment === 'full' ? a * P.underUpg : 0;
       var vent    = 0;
       if (S.ventType === 'box')     vent = S.ventQty === 1 ? 300 : S.ventQty * 250;
@@ -798,10 +818,14 @@
       document.getElementById('calcAreaNote').textContent =
         S.footprint + ' ft² × ' + P.slopeMult[S.slopeGroup] + ' slope = ' + a + ' ft²';
 
-      document.getElementById('tp-good').textContent   = $$(a * P.shingles.good);
-      document.getElementById('tp-better').textContent = $$(a * P.shingles.better);
-      document.getElementById('tp-best').textContent   = $$(a * P.shingles.best);
+      var pkgs = totalPkgs();
+      document.getElementById('tp-good').textContent   = $$(pkgs * P.shingles.good);
+      document.getElementById('tp-better').textContent = $$(pkgs * P.shingles.better);
+      document.getElementById('tp-best').textContent   = $$(pkgs * P.shingles.best);
       document.getElementById('under-upg-price').textContent = '+' + $$(a * P.underUpg);
+      document.getElementById('qc-area').textContent  = a.toLocaleString('en-CA');
+      document.getElementById('qc-pkgs').textContent  = pkgs.toFixed(1);
+      document.getElementById('qc-cost').textContent  = $$(pkgs * P.shingles[S.tier]);
       document.getElementById('caps-price').textContent      = '+' + $$(pm * P.eave.capFt);
 
       renderEaveBox(pm);
@@ -820,8 +844,8 @@
 
     function renderSidebar() {
       var c  = costs();
-      var sl = { standard:'Standard ×1.2', steep:'Steep ×1.4', verySteep:'Very Steep ×1.5' };
-      var tl = { good:'Good 30-yr', better:'Better 40-yr', best:'Best 50-yr' };
+      var sl = { standard:'Low ×1.2', steep:'Medium ×1.4', verySteep:'Steep ×1.5' };
+      var tl = { good:'Standard 30-yr', better:'Premium 40-yr', best:'Deluxe 50-yr' };
       var vl = { standard:'Standard (incl.)', box:'Box ×'+S.ventQty, turbine:'Turbine ×'+S.ventQty, solar:'Solar ×'+S.ventQty };
       var ul = { standard:'Standard edge', full:'Full coverage' };
 
@@ -935,7 +959,7 @@
       }
       if (step === 5) buildSummary();
       if (step === 1) {
-        tryInitMap();
+        setTimeout(tryInitMap, 50);
         if (leafletMap) leafletMap.invalidateSize();
       }
       window.scrollTo({ top: document.getElementById('wizard-wrap').getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' });
@@ -971,7 +995,6 @@
       document.getElementById('mob-bar').style.removeProperty('display');
 
       goTo(1);
-      tryInitMap();
       fetchPropData(S.address, S.lat, S.lng);
     }
 
@@ -1323,8 +1346,8 @@
       document.getElementById('sum-lo').textContent    = $$(c.total * 0.85);
       document.getElementById('sum-hi').textContent    = $$(c.total * 1.15);
 
-      var sl = { standard:'Standard slope ×1.2 (0°–30°)', steep:'Steep slope ×1.4 (31°–40°)', verySteep:'Very steep slope ×1.5 (41°+)' };
-      var tl = { good:'Good — 30-yr Architectural (IKO / BP)', better:'Better — 40-yr Dimensional (GAF / Owens Corning)', best:'Best — 50-yr Premium (CertainTeed / GAF HDZ)' };
+      var sl = { standard:'Low slope ×1.2 (0°–30°)', steep:'Medium slope ×1.4 (31°–40°)', verySteep:'Steep slope ×1.5 (41°+)' };
+      var tl = { good:'Standard — 30-yr Architectural (IKO / BP)', better:'Premium — 40-yr Dimensional (GAF / Owens Corning)', best:'Deluxe — 50-yr Premium (CertainTeed / GAF HDZ)' };
       var vl = { standard:'Standard plastic vents (included)', box:'Tower/Box vents &times;'+S.ventQty, turbine:'Turbine vents &times;'+S.ventQty, solar:'Solar panel vents &times;'+S.ventQty };
       var dataNote = S.perimeterFt ? ' <span style="color:#28a745;font-size:10px;font-weight:600;">&#10003; from building outline</span>' : ' (estimated)';
 
