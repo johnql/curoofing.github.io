@@ -421,11 +421,11 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label>Estimated Roof Area</label>
+                      <label>Est. Perimeter</label>
                       <div class="calc-box">
-                        <span class="calc-big" id="calcArea">—</span>
-                        <span style="font-size:14px;color:#888;"> sq ft</span>
-                        <span class="calc-small" id="calcAreaNote">Footprint &times; slope multiplier</span>
+                        <span class="calc-big" id="calcPerim">—</span>
+                        <span style="font-size:14px;color:#888;"> ft</span>
+                        <span class="calc-small">Roof perimeter (estimated)</span>
                       </div>
                     </div>
                   </div>
@@ -479,6 +479,18 @@
                         <div class="slope-mult m-vst">&times; 1.5 area multiplier</div>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <!-- Roof surface area — updates live when slope changes -->
+                <div class="calc-box mb-3" style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <span style="font-size:13px;font-weight:600;color:#444;">Estimated Roof Surface Area</span>
+                    <span class="calc-small d-block" id="calcAreaNote">Footprint &times; slope multiplier</span>
+                  </div>
+                  <div style="text-align:right;">
+                    <span class="calc-big" id="calcArea">—</span>
+                    <span style="font-size:14px;color:#888;"> sq ft</span>
                   </div>
                 </div>
 
@@ -543,22 +555,31 @@
                 <h4 class="step-title mb-1"><span class="step-num">2</span> Roof Protection (Underlayment)</h4>
                 <p class="text-muted mb-4" style="font-size:13px;">Ice and water shield protects against GTA winters, ice dams, and wind-driven rain.</p>
                 <div class="row">
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-4 mb-3">
                     <div class="opt-card sel" id="oc-us" onclick="selUnder('standard')">
                       <span class="opt-icon">🛡️</span>
                       <div><span class="badge-inc">Included</span></div>
-                      <div class="opt-title mt-2">Standard Protection</div>
-                      <div class="opt-desc">3-foot ice &amp; water barrier along all roof perimeter edges — meets Ontario Building Code minimum.</div>
+                      <div class="opt-title mt-2">Standard Barrier</div>
+                      <div class="opt-desc">3-foot underlayment along all roof perimeter edges — meets Ontario Building Code minimum.</div>
                       <div class="opt-price">$0 add-on</div>
                     </div>
                   </div>
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-4 mb-3">
+                    <div class="opt-card" id="oc-ice" onclick="selUnder('ice')">
+                      <span class="opt-icon">❄️</span>
+                      <div><span class="badge-upg">Upgrade</span></div>
+                      <div class="opt-title mt-2">Ice &amp; Water Barrier</div>
+                      <div class="opt-desc">3-foot ice &amp; water barrier along all roof perimeter edges — updated version meeting current building code.</div>
+                      <div class="opt-price">+$200</div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
                     <div class="opt-card" id="oc-uf" onclick="selUnder('full')">
                       <span class="opt-icon">🔒</span>
-                      <div><span class="badge-upg">Upgrade</span></div>
+                      <div><span class="badge-prem">Premium</span></div>
                       <div class="opt-title mt-2">Full Coverage</div>
-                      <div class="opt-desc">Ice &amp; water shield over the entire roof deck. Maximum protection — recommended for older homes and severe weather exposure.</div>
-                      <div class="opt-price" id="under-upg-price">+$—</div>
+                      <div class="opt-desc">Ice &amp; water shield over the entire roof deck. Maximum protection for older homes and severe weather.</div>
+                      <div class="opt-price">+$300</div>
                     </div>
                   </div>
                 </div>
@@ -577,53 +598,23 @@
                     <div class="opt-card sel" id="ov-standard" onclick="selVent('standard')">
                       <span class="opt-icon">🌬️</span>
                       <div><span class="badge-inc">Included</span></div>
-                      <div class="opt-title mt-2">Standard Plastic Vents</div>
-                      <div class="opt-desc">Low-profile plastic ridge vents. Reliable passive ventilation included in your base package.</div>
+                      <div class="opt-title mt-2">Standard Box Ventilation</div>
+                      <div class="opt-desc">Low-profile box vents. Reliable passive ventilation included in your base package.</div>
                       <div class="opt-price">$0 add-on</div>
                     </div>
                   </div>
                   <div class="col-md-6 mb-3">
-                    <div class="opt-card" id="ov-box" onclick="selVent('box')">
+                    <div class="opt-card" id="ov-tower" onclick="selVent('tower')">
                       <span class="opt-icon">🏠</span>
                       <div><span class="badge-upg">Upgrade</span></div>
-                      <div class="opt-title mt-2">Tower / Box Vents</div>
-                      <div class="opt-desc">Raised box vents with higher airflow. 1 vent = $300 &bull; each additional = $250.</div>
-                      <div class="qty-row" id="qr-box" style="display:none;">
+                      <div class="opt-title mt-2">Tower Ventilation</div>
+                      <div class="opt-desc">Raised tower vents with higher airflow. $200 per unit.</div>
+                      <div class="qty-row" id="qr-tower" style="display:none;">
                         <button class="qty-btn" onclick="event.stopPropagation();chgQty(-1)">&#8722;</button>
-                        <span class="qty-num" id="qn1">1</span>
+                        <span class="qty-num" id="qn-tower">1</span>
                         <button class="qty-btn" onclick="event.stopPropagation();chgQty(1)">+</button>
                         <span style="font-size:12px;color:#888;">vent(s)</span>
-                        <strong class="ml-auto" id="vp-box" style="color:var(--ep);">$300</strong>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <div class="opt-card" id="ov-turbine" onclick="selVent('turbine')">
-                      <span class="opt-icon">🌀</span>
-                      <div><span class="badge-upg">Upgrade</span></div>
-                      <div class="opt-title mt-2">Turbine Vents</div>
-                      <div class="opt-desc">Wind-powered spinning vents. No electricity needed. Great airflow even in a light breeze. $375 per unit.</div>
-                      <div class="qty-row" id="qr-turbine" style="display:none;">
-                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(-1)">&#8722;</button>
-                        <span class="qty-num" id="qn2">1</span>
-                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(1)">+</button>
-                        <span style="font-size:12px;color:#888;">vent(s)</span>
-                        <strong class="ml-auto" id="vp-turbine" style="color:var(--ep);">$375</strong>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <div class="opt-card" id="ov-solar" onclick="selVent('solar')">
-                      <span class="opt-icon">☀️</span>
-                      <div><span class="badge-prem">Premium</span></div>
-                      <div class="opt-title mt-2">Solar Panel Vents</div>
-                      <div class="opt-desc">Solar-powered electric fans. Maximum ventilation, zero operating cost. Eco-friendly choice. $650 per unit.</div>
-                      <div class="qty-row" id="qr-solar" style="display:none;">
-                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(-1)">&#8722;</button>
-                        <span class="qty-num" id="qn3">1</span>
-                        <button class="qty-btn" onclick="event.stopPropagation();chgQty(1)">+</button>
-                        <span style="font-size:12px;color:#888;">vent(s)</span>
-                        <strong class="ml-auto" id="vp-solar" style="color:var(--ep);">$650</strong>
+                        <strong class="ml-auto" id="vp-tower" style="color:var(--ep);">$200</strong>
                       </div>
                     </div>
                   </div>
@@ -789,8 +780,8 @@
     ══════════════════════════════════════════════════════════════════ */
     var P = {
       shingles:   { good:90, better:105, best:115 },  // $ per package (covers 33.3 sq ft)
-      underUpg:   0.75,                                     // $ per roof sq ft (full upgrade)
-      vent:       { box:{ first:300, add:250 }, turbine:375, solar:650 },
+      underFlat:  { standard:0, ice:200, full:300 },        // flat $ per underlayment option
+      vent:       { tower:200 },                             // $ per unit
       eave:       { perFt:8, capFt:5 },
       ds:         { 1:50, 2:100, 3:150 },                   // total downspout ft by storeys
       slopeMult:  { standard:1.2, steep:1.4, verySteep:1.5 },
@@ -801,7 +792,7 @@
        CALCULATIONS
     ══════════════════════════════════════════════════════════════════ */
     function roofArea() { return Math.round(S.footprint * P.slopeMult[S.slopeGroup]); }
-    function totalPkgs() { return parseFloat(((roofArea() / 33.3) + 2.5).toFixed(1)); }
+    function totalPkgs() { return Math.ceil(roofArea() / 33.3) + 3; }
 
     function perimFt() {
       if (S.perimeterFt) return S.perimeterFt;
@@ -811,11 +802,8 @@
     function costs() {
       var a = roofArea(), pm = perimFt(), ds = P.ds[S.stories];
       var shingle = totalPkgs() * P.shingles[S.tier];
-      var under   = S.underlayment === 'full' ? a * P.underUpg : 0;
-      var vent    = 0;
-      if (S.ventType === 'box')     vent = S.ventQty === 1 ? 300 : S.ventQty * 250;
-      if (S.ventType === 'turbine') vent = S.ventQty * P.vent.turbine;
-      if (S.ventType === 'solar')   vent = S.ventQty * P.vent.solar;
+      var under   = P.underFlat[S.underlayment] || 0;
+      var vent    = S.ventType === 'tower' ? S.ventQty * P.vent.tower : 0;
       var eaveBase = (pm + ds) * P.eave.perFt;
       var caps     = S.addCaps ? pm * P.eave.capFt : 0;
       return { a:a, pm:pm, ds:ds, shingle:shingle, under:under, vent:vent,
@@ -839,9 +827,9 @@
       document.getElementById('tp-good').textContent   = $$(pkgs * P.shingles.good);
       document.getElementById('tp-better').textContent = $$(pkgs * P.shingles.better);
       document.getElementById('tp-best').textContent   = $$(pkgs * P.shingles.best);
-      document.getElementById('under-upg-price').textContent = '+' + $$(a * P.underUpg);
+      document.getElementById('calcPerim').textContent = pm.toLocaleString('en-CA');
       document.getElementById('qc-area').textContent  = a.toLocaleString('en-CA');
-      document.getElementById('qc-pkgs').textContent  = pkgs.toFixed(1);
+      document.getElementById('qc-pkgs').textContent  = pkgs;
       document.getElementById('qc-cost').textContent  = $$(pkgs * P.shingles[S.tier]);
       document.getElementById('caps-price').textContent      = '+' + $$(pm * P.eave.capFt);
 
@@ -863,8 +851,8 @@
       var c  = costs();
       var sl = { standard:'Low ×1.2', steep:'Medium ×1.4', verySteep:'Steep ×1.5' };
       var tl = { good:'Standard 30-yr', better:'Premium 40-yr', best:'Deluxe 50-yr' };
-      var vl = { standard:'Standard (incl.)', box:'Box ×'+S.ventQty, turbine:'Turbine ×'+S.ventQty, solar:'Solar ×'+S.ventQty };
-      var ul = { standard:'Standard edge', full:'Full coverage' };
+      var vl = { standard:'Standard (incl.)', tower:'Tower ×'+S.ventQty };
+      var ul = { standard:'Standard barrier', ice:'Ice & water barrier', full:'Full coverage' };
 
       var html =
         '<div class="cline"><span class="cl">Roof area (' + sl[S.slopeGroup] + ')</span><span class="cv">' + c.a.toLocaleString() + ' ft²</span></div>' +
@@ -902,35 +890,31 @@
 
     function selUnder(t) {
       S.underlayment = t;
-      document.getElementById('oc-us').classList.toggle('sel', t==='standard');
-      document.getElementById('oc-uf').classList.toggle('sel', t==='full');
+      document.getElementById('oc-us').classList.toggle('sel',  t==='standard');
+      document.getElementById('oc-ice').classList.toggle('sel', t==='ice');
+      document.getElementById('oc-uf').classList.toggle('sel',  t==='full');
       updateCalc();
     }
 
     function selVent(t) {
       S.ventType = t; S.ventQty = 1;
-      ['standard','box','turbine','solar'].forEach(function(x){
+      ['standard','tower'].forEach(function(x){
         document.getElementById('ov-'+x).classList.toggle('sel', x===t);
       });
-      ['box','turbine','solar'].forEach(function(x){
-        document.getElementById('qr-'+x).style.display = (x===t) ? 'flex' : 'none';
-      });
+      document.getElementById('qr-tower').style.display = t==='tower' ? 'flex' : 'none';
       refreshVentPrices();
       updateCalc();
     }
 
     function chgQty(d) {
       S.ventQty = Math.max(1, S.ventQty + d);
-      ['qn1','qn2','qn3'].forEach(function(id){ document.getElementById(id).textContent = S.ventQty; });
+      document.getElementById('qn-tower').textContent = S.ventQty;
       refreshVentPrices();
       updateCalc();
     }
 
     function refreshVentPrices() {
-      var q = S.ventQty;
-      document.getElementById('vp-box').textContent     = $$(q===1 ? 300 : q*250);
-      document.getElementById('vp-turbine').textContent = $$(q * P.vent.turbine);
-      document.getElementById('vp-solar').textContent   = $$(q * P.vent.solar);
+      document.getElementById('vp-tower').textContent = $$(S.ventQty * P.vent.tower);
     }
 
     function selStories(n) {
@@ -1365,7 +1349,7 @@
 
       var sl = { standard:'Low slope ×1.2 (0°–30°)', steep:'Medium slope ×1.4 (31°–40°)', verySteep:'Steep slope ×1.5 (41°+)' };
       var tl = { good:'Standard — 30-yr Architectural (IKO / BP)', better:'Premium — 40-yr Dimensional (GAF / Owens Corning)', best:'Deluxe — 50-yr Premium (CertainTeed / GAF HDZ)' };
-      var vl = { standard:'Standard plastic vents (included)', box:'Tower/Box vents &times;'+S.ventQty, turbine:'Turbine vents &times;'+S.ventQty, solar:'Solar panel vents &times;'+S.ventQty };
+      var vl = { standard:'Standard box vents (included)', tower:'Tower vents &times;'+S.ventQty };
       var dataNote = S.perimeterFt ? ' <span style="color:#28a745;font-size:10px;font-weight:600;">&#10003; from building outline</span>' : ' (estimated)';
 
       document.getElementById('sum-breakdown').innerHTML =
@@ -1375,7 +1359,7 @@
         '</small></span><span class="bv">' + $$(c.shingle) + '</span></div>' +
         '<div class="brow"><span>' + tl[S.tier] + '</span><span class="bv">Included</span></div>' +
         '<div class="brow"><span>Underlayment<br><small style="color:#999;">' +
-          (S.underlayment === 'full' ? 'Full roof coverage' : 'Standard 3-ft perimeter (code min.)') +
+          ({ standard:'Standard 3-ft perimeter (code min.)', ice:'Ice & water barrier 3-ft perimeter', full:'Full roof coverage' }[S.underlayment]) +
         '</small></span><span class="bv">' + (c.under > 0 ? '+'+$$(c.under) : 'Included') + '</span></div>' +
         '<div class="brow"><span>Ventilation<br><small style="color:#999;">' + vl[S.ventType] + '</small></span><span class="bv">' +
           (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>' +
