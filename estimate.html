@@ -608,6 +608,42 @@
                   </div>
                 </div>
 
+                <!-- Eavestrough optional section -->
+                <div class="mt-3 pt-3" style="border-top:1px solid #f0f0f0;">
+                  <div class="toggle-card" id="eave-card" onclick="onEaveToggle(event)">
+                    <div class="tog-info">
+                      <h6>Eavestrough &amp; Downspouts</h6>
+                      <small>Add eavestrough replacement to your estimate. Priced per linear foot of roof perimeter.</small>
+                    </div>
+                    <label class="tog-wrap" onclick="event.stopPropagation()">
+                      <input type="checkbox" id="eaveToggle" onchange="onEaveToggleChk()">
+                      <span class="tog-slider"></span>
+                    </label>
+                  </div>
+                  <div id="eave-section" style="display:none;margin-top:16px;">
+                    <div class="form-group mb-3">
+                      <label class="d-block mb-2" style="font-size:13px;font-weight:700;">How many storeys is your home?</label>
+                      <div class="row">
+                        <div class="col-4"><div class="story-btn sel" id="sb1" onclick="selStories(1)"><span class="story-icon">🏠</span><span class="d-block" style="font-size:12px;margin-top:4px;">1 Storey</span></div></div>
+                        <div class="col-4"><div class="story-btn"    id="sb2" onclick="selStories(2)"><span class="story-icon">🏡</span><span class="d-block" style="font-size:12px;margin-top:4px;">2 Storeys</span></div></div>
+                        <div class="col-4"><div class="story-btn"    id="sb3" onclick="selStories(3)"><span class="story-icon">🏢</span><span class="d-block" style="font-size:12px;margin-top:4px;">3 Storeys</span></div></div>
+                      </div>
+                    </div>
+                    <div class="eave-box" id="eave-breakdown"></div>
+                    <div class="toggle-card" id="caps-card" onclick="onCapsClick(event)">
+                      <div class="tog-info">
+                        <h6>Add Eavestrough Leaf Guards (Caps)</h6>
+                        <small>Prevents leaves and debris from clogging eavestroughs. +$5/linear ft of roof perimeter.</small>
+                        <div style="margin-top:6px;font-weight:700;color:var(--ep);" id="caps-price">+$—</div>
+                      </div>
+                      <label class="tog-wrap" onclick="event.stopPropagation()">
+                        <input type="checkbox" id="capsChk" onchange="onCapsChange()">
+                        <span class="tog-slider"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="step-nav">
                   <span></span>
                   <button class="btn-nxt" onclick="goTo(5)">View My Estimate &rarr;</button>
@@ -717,7 +753,7 @@
       tier:'better',
       underlayment:'standard',
       ventType:'standard', ventQty:1,
-      stories:1, addCaps:false,
+      stories:1, addCaps:false, eave:false,
       perimeterFt:null,         // null = use estimate; number = from building polygon
       pendingPolygon:null,      // polygon received before map was ready
       step:0, mapInit:false,
@@ -735,6 +771,8 @@
       shingles:   { good:90, better:105, best:115 },  // $ per package (covers 33.3 sq ft)
       underFlat:  { standard:0, ice:150, full:300 },        // flat $ per underlayment option
       vent:       { tower:200 },                             // $ per unit
+      eave:       { perFt:8, capFt:5 },
+      ds:         { 1:50, 2:100, 3:150 },                   // total downspout ft by storeys
       slopeMult:  { standard:1.2, steep:1.4, verySteep:1.5 },
       htDef:      { detached:1500, semi:1000, townhouse:700, commercial:3000 },
     };
@@ -751,12 +789,14 @@
     }
 
     function costs() {
-      var a = roofArea(), pm = perimFt();
-      var shingle = totalPkgs() * P.shingles[S.tier];
-      var under   = P.underFlat[S.underlayment] || 0;
-      var vent    = S.ventType === 'tower' ? S.ventQty * P.vent.tower : 0;
-      return { a:a, pm:pm, shingle:shingle, under:under, vent:vent,
-               total:shingle+under+vent };
+      var a = roofArea(), pm = perimFt(), ds = P.ds[S.stories];
+      var shingle  = totalPkgs() * P.shingles[S.tier];
+      var under    = P.underFlat[S.underlayment] || 0;
+      var vent     = S.ventType === 'tower' ? S.ventQty * P.vent.tower : 0;
+      var eaveBase = S.eave ? (pm + ds) * P.eave.perFt : 0;
+      var caps     = S.eave && S.addCaps ? pm * P.eave.capFt : 0;
+      return { a:a, pm:pm, ds:ds, shingle:shingle, under:under, vent:vent,
+               eaveBase:eaveBase, caps:caps, total:shingle+under+vent+eaveBase+caps };
     }
 
     function $$(n) { return '$' + Math.round(n).toLocaleString('en-CA'); }
@@ -781,6 +821,51 @@
       renderSidebar();
     }
 
+    function renderEaveBox() {
+      var pm = perimFt(), ds = P.ds[S.stories];
+      var base = (pm + ds) * P.eave.perFt;
+      document.getElementById('eave-breakdown').innerHTML =
+        '<div class="eave-row"><span>Roof perimeter' + (S.perimeterFt ? ' (from building outline)' : ' (estimated)') + '</span><strong>' + pm + ' ft</strong></div>' +
+        '<div class="eave-row"><span>Downspouts (' + S.stories + ' storey &times; ' + Math.round(ds/S.stories) + ' ft = ' + ds + ' ft)</span><strong>' + ds + ' ft</strong></div>' +
+        '<div class="eave-row et"><span>Base eavestrough cost (' + (pm+ds) + ' ft &times; $8)</span><strong>' + $$(base) + '</strong></div>';
+      document.getElementById('caps-price').textContent = '+' + $$(pm * P.eave.capFt);
+    }
+
+    function selStories(n) {
+      S.stories = n;
+      [1,2,3].forEach(function(i){ document.getElementById('sb'+i).classList.toggle('sel', i===n); });
+      renderEaveBox();
+      updateCalc();
+    }
+
+    function onCapsChange() {
+      S.addCaps = document.getElementById('capsChk').checked;
+      document.getElementById('caps-card').classList.toggle('on', S.addCaps);
+      updateCalc();
+    }
+
+    function onCapsClick(e) {
+      if (e.target.closest('.tog-wrap')) return;
+      var chk = document.getElementById('capsChk');
+      chk.checked = !chk.checked;
+      onCapsChange();
+    }
+
+    function onEaveToggleChk() {
+      S.eave = document.getElementById('eaveToggle').checked;
+      document.getElementById('eave-card').classList.toggle('on', S.eave);
+      document.getElementById('eave-section').style.display = S.eave ? 'block' : 'none';
+      if (S.eave) renderEaveBox();
+      updateCalc();
+    }
+
+    function onEaveToggle(e) {
+      if (e && e.target.closest('.tog-wrap')) return;
+      var chk = document.getElementById('eaveToggle');
+      chk.checked = !chk.checked;
+      onEaveToggleChk();
+    }
+
     function renderSidebar() {
       var c  = costs();
       var sl = { standard:'Low ×1.2', steep:'Medium ×1.4', verySteep:'Steep ×1.5' };
@@ -793,6 +878,10 @@
         '<div class="cline"><span class="cl">Shingles (' + tl[S.tier] + ')</span><span class="cv">' + $$(c.shingle) + '</span></div>' +
         '<div class="cline"><span class="cl">Underlayment (' + ul[S.underlayment] + ')</span><span class="cv">' + (c.under > 0 ? '+'+$$(c.under) : 'Included') + '</span></div>' +
         '<div class="cline"><span class="cl">Ventilation (' + vl[S.ventType] + ')</span><span class="cv">' + (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>';
+      if (S.eave) {
+        html += '<div class="cline"><span class="cl">Eavestroughs &amp; downspouts</span><span class="cv">' + $$(c.eaveBase) + '</span></div>';
+        if (S.addCaps) html += '<div class="cline"><span class="cl">Leaf guard caps</span><span class="cv">+' + $$(c.caps) + '</span></div>';
+      }
       html += '<div class="cline ctotal"><span>Total Estimate</span><span class="cv">' + $$(c.total) + '</span></div>';
 
       document.getElementById('sb-lines').innerHTML = html;
@@ -922,9 +1011,14 @@
         name:'', email:'', phone:'', address:'', lat:null, lng:null, addrConfirmed:false,
         homeType:'detached', footprint:1500, slopeGroup:'standard', tier:'better',
         underlayment:'standard', ventType:'standard', ventQty:1,
-        stories:1, addCaps:false, perimeterFt:null, pendingPolygon:null,
+        stories:1, addCaps:false, eave:false, perimeterFt:null, pendingPolygon:null,
         step:0, mapInit:false,
       });
+      document.getElementById('eaveToggle').checked = false;
+      document.getElementById('eave-card').classList.remove('on');
+      document.getElementById('eave-section').style.display = 'none';
+      document.getElementById('capsChk').checked = false;
+      document.getElementById('caps-card').classList.remove('on');
       document.getElementById('wizard-wrap').style.display  = 'none';
       document.getElementById('panel-lead').style.display   = 'block';
       document.getElementById('mob-bar').style.setProperty('display','none','important');
@@ -1276,7 +1370,12 @@
           ({ standard:'Standard 3-ft perimeter (code min.)', ice:'Ice & water barrier 3-ft perimeter', full:'Full roof coverage' }[S.underlayment]) +
         '</small></span><span class="bv">' + (c.under > 0 ? '+'+$$(c.under) : 'Included') + '</span></div>' +
         '<div class="brow"><span>Ventilation<br><small style="color:#999;">' + vl[S.ventType] + '</small></span><span class="bv">' +
-          (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>';
+          (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>' +
+        (S.eave ? '<div class="brow"><span>Eavestroughs &amp; Downspouts<br><small style="color:#999;">' +
+          c.pm + ' ft perimeter + ' + c.ds + ' ft downspouts &times; $8/ft' +
+          (S.perimeterFt ? ' <span style="color:#28a745;font-size:10px;font-weight:600;">&#10003; from building outline</span>' : ' (estimated)') +
+          '</small></span><span class="bv">' + $$(c.eaveBase) + '</span></div>' +
+          (S.addCaps ? '<div class="brow"><span>Leaf Guard Caps<br><small style="color:#999;">' + c.pm + ' ft &times; $5/ft</small></span><span class="bv">+' + $$(c.caps) + '</span></div>' : '') : '');
 
       renderSidebar();
     }
