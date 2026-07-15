@@ -880,7 +880,7 @@
       var ul = { standard:'Standard barrier', ice:'Ice & water barrier', full:'Full coverage' };
 
       var html = '';
-      if (S.eave) html += '<div class="cline csect"><span>Roof Replacement</span></div>';
+      if (S.eave) html += '<div class="cline csect"><span>Shingle Replacement</span></div>';
       html +=
         '<div class="cline"><span class="cl">Roof area (' + sl[S.slopeGroup] + ')</span><span class="cv">' + c.a.toLocaleString() + ' ft²</span></div>' +
         '<div class="cline"><span class="cl">Shingles (' + tl[S.tier] + ')</span><span class="cv">' + $$(c.shingle) + '</span></div>' +
@@ -1382,7 +1382,7 @@
           '<div class="row">' +
             '<div class="col-sm-6">' +
               '<div class="sum-total-box">' +
-                '<div class="st-lbl">Roof Replacement</div>' +
+                '<div class="st-lbl">Shingle Replacement</div>' +
                 '<div class="st-amt">' + $$(roofSub) + '</div>' +
               '</div>' +
             '</div>' +
@@ -1409,7 +1409,7 @@
 
       // ── Roof breakdown ─────────────────────────────────────────────────────
       var roofBreakdown =
-        '<div class="brow bhdr"><span>Roof Replacement</span><span>Cost</span></div>' +
+        '<div class="brow bhdr"><span>Shingle Replacement</span><span>Cost</span></div>' +
         '<div class="brow"><span>Shingles &amp; Labour<br><small style="color:#999;">' +
           c.a.toLocaleString() + ' sq ft &bull; ' + sl[S.slopeGroup] + '<br>' +
           totalPkgs() + ' packages &times; $' + P.shingles[S.tier] + '/pkg' +
@@ -1420,7 +1420,7 @@
         '<div class="brow"><span>Ventilation<br><small style="color:#999;">' + vl[S.ventType] + '</small></span><span class="bv">' +
           (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>';
       if (S.eave) {
-        roofBreakdown += '<div class="brow" style="background:#fafafa;font-weight:700;"><span>Roof Subtotal</span><span class="bv">' + $$(roofSub) + '</span></div>';
+        roofBreakdown += '<div class="brow" style="background:#fafafa;font-weight:700;"><span>Shingle Replacement Subtotal</span><span class="bv">' + $$(roofSub) + '</span></div>';
       }
       roofBreakdown += '<div style="padding:10px 16px;font-size:11px;color:#888;font-style:italic;border-top:1px solid #f0f0f0;">* Flat surfaces are not included within the scope of this roof replacement service unless otherwise specified in a separate quotation or agreement.</div>';
 
