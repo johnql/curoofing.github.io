@@ -888,8 +888,8 @@
         '<div class="cline"><span class="cl">Ventilation (' + vl[S.ventType] + ')</span><span class="cv">' + (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>';
       if (S.eave) {
         html += '<div class="cline csubt"><span>Subtotal</span><span class="cv">' + $$(roofSub) + '</span></div>';
-        html += '<div class="cline csect"><span>Eavestrough &amp; Downpipes</span></div>';
-        html += '<div class="cline"><span class="cl">Eavestroughs &amp; downspouts</span><span class="cv">' + $$(c.eaveBase) + '</span></div>';
+        html += '<div class="cline csect"><span>Eavestroughs &amp; Downspouts</span></div>';
+        html += '<div class="cline"><span class="cl">Eavestroughs &amp; Downspouts</span><span class="cv">' + $$(c.eaveBase) + '</span></div>';
         if (S.addCaps) html += '<div class="cline"><span class="cl">Leaf guard caps</span><span class="cv">+' + $$(c.caps) + '</span></div>';
         html += '<div class="cline csubt"><span>Subtotal</span><span class="cv">' + $$(eaveSub) + '</span></div>';
         html += '<div class="cline ctotal"><span>Combined Total</span><span class="cv">' + $$(c.total) + '</span></div>';
@@ -1388,7 +1388,7 @@
             '</div>' +
             '<div class="col-sm-6">' +
               '<div class="sum-total-box stb-eave">' +
-                '<div class="st-lbl">Eavestrough &amp; Downpipes</div>' +
+                '<div class="st-lbl">Eavestroughs &amp; Downspouts</div>' +
                 '<div class="st-amt">' + $$(eaveSub) + '</div>' +
               '</div>' +
             '</div>' +
@@ -1411,7 +1411,8 @@
       var roofBreakdown =
         '<div class="brow bhdr"><span>Roof Replacement</span><span>Cost</span></div>' +
         '<div class="brow"><span>Shingles &amp; Labour<br><small style="color:#999;">' +
-          c.a.toLocaleString() + ' sq ft &bull; ' + sl[S.slopeGroup] + ' &bull; ' + S.homeType +
+          c.a.toLocaleString() + ' sq ft &bull; ' + sl[S.slopeGroup] + '<br>' +
+          totalPkgs() + ' packages &times; $' + P.shingles[S.tier] + '/pkg' +
         '</small></span><span class="bv">' + $$(c.shingle) + '</span></div>' +
         '<div class="brow"><span>' + tl[S.tier] + '</span><span class="bv">Included</span></div>' +
         '<div class="brow"><span>Underlayment<br><small style="color:#999;">' + ul[S.underlayment] +
@@ -1428,11 +1429,10 @@
         var perimNote = S.perimeterFt ? ' <span style="color:#28a745;font-size:10px;font-weight:600;">&#10003; from building outline</span>' : ' (estimated)';
         eaveBreakdown =
           '<div class="sum-breakdown mt-3">' +
-          '<div class="brow bhdr"><span>Eavestrough &amp; Downpipes</span><span>Cost</span></div>' +
-          '<div class="brow"><span>Linear footage<br><small style="color:#999;">' +
-            c.pm + ' ft perimeter' + perimNote + ' + ' + c.ds + ' ft downspouts' +
-          '</small></span><span class="bv">' + (c.pm + c.ds) + ' ft</span></div>' +
-          '<div class="brow"><span>Installation ($8/ft)</span><span class="bv">' + $$(c.eaveBase) + '</span></div>' +
+          '<div class="brow bhdr"><span>Eavestroughs &amp; Downspouts</span><span>Cost</span></div>' +
+          '<div class="brow"><span>Eavestroughs &amp; Downspouts<br><small style="color:#999;">' +
+            c.pm + ' ft perimeter' + perimNote + ' + ' + c.ds + ' ft downspouts = ' + (c.pm + c.ds) + ' ft &times; $8/ft' +
+          '</small></span><span class="bv">' + $$(c.eaveBase) + '</span></div>' +
           (S.addCaps ? '<div class="brow"><span>Leaf Guard Caps<br><small style="color:#999;">' + c.pm + ' ft &times; $5/ft</small></span><span class="bv">+' + $$(c.caps) + '</span></div>' : '') +
           '<div class="brow" style="background:#fafafa;font-weight:700;"><span>Eavestrough Subtotal</span><span class="bv">' + $$(eaveSub) + '</span></div>' +
           '</div>';
