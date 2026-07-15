@@ -1010,6 +1010,13 @@
       }
       err.style.display = 'none';
 
+      // Save inquiry — fire and forget, never blocks the estimate flow
+      fetch('/api/submit-inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, phone: phone, email: email, address: addr, message: 'Online estimate request' }),
+      }).catch(function() {});
+
       S.name = name; S.email = email; S.phone = phone; S.address = addr;
       document.getElementById('panel-lead').style.display = 'none';
       document.getElementById('wizard-wrap').style.display = 'block';
