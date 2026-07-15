@@ -141,6 +141,9 @@
       .cline .cv { font-weight:600; }
       .cline.ctotal { border-top:2px solid var(--ep);margin-top:8px;padding-top:10px;font-size:15px;font-weight:700; }
       .cline.ctotal .cv { color:var(--ep);font-size:19px; }
+      .cline.csect  { border-top:1px solid #f0f0f0;margin-top:8px;padding-top:8px;font-size:10px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.6px; }
+      .cline.csubt  { border-top:1px solid #e9ecef;margin-top:3px;padding-top:6px;font-weight:600;font-size:13px; }
+      .cline.csubt .cv { color:var(--ep-dark); }
       .sidebar-addr { font-size:11px;color:#999;margin-bottom:13px;word-break:break-word; }
 
       /* ── Mobile cost bar ──────────────────────────── */
@@ -164,8 +167,12 @@
 
       /* ── Summary ──────────────────────────────────── */
       .sum-total-box { background:var(--ep);color:#fff;border-radius:10px;padding:22px;text-align:center;margin:20px 0; }
+      .sum-total-box.stb-eave { background:#2c6e8a; }
       .sum-total-box .st-lbl { font-size:13px;opacity:.85; }
-      .sum-total-box .st-amt { font-size:40px;font-weight:700;line-height:1.2; }
+      .sum-total-box .st-amt { font-size:36px;font-weight:700;line-height:1.2; }
+      .sum-combined { background:#222;color:#fff;border-radius:8px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px; }
+      .sum-combined .sc-lbl { font-size:13px;opacity:.75; }
+      .sum-combined .sc-amt { font-size:26px;font-weight:700; }
       .sum-breakdown { border:1px solid #e9ecef;border-radius:8px;overflow:hidden;font-size:13px; }
       .brow { display:flex;justify-content:space-between;padding:11px 16px;border-bottom:1px solid #f0f0f0; }
       .brow:last-child { border-bottom:none; }
@@ -658,12 +665,9 @@
                   <h4 class="step-title">Your Roofing Estimate</h4>
                   <p class="text-muted" style="font-size:13px;">Prepared for <strong id="sum-name"></strong> &bull; <span id="sum-addr"></span></p>
                 </div>
-                <div class="sum-total-box">
-                  <div class="st-lbl">Estimated Project Cost</div>
-                  <div class="st-amt" id="sum-total">$—</div>
-                  <div class="st-lbl">Range: <span id="sum-lo">$—</span> &ndash; <span id="sum-hi">$—</span></div>
-                </div>
-                <div class="sum-breakdown" id="sum-breakdown"></div>
+                <div id="sum-totals"></div>
+                <div id="sum-breakdown" class="sum-breakdown"></div>
+                <div id="sum-eave-breakdown"></div>
                 <p class="disclaimer">* This is an automated estimate based on typical 2025 GTA roofing costs. Actual costs may vary ±15% depending on site conditions, material availability, and access. A professional on-site inspection is required for a binding quote.</p>
                 <div class="cta-box">
                   <h5 style="font-weight:700;">Ready to move forward?</h5>
@@ -868,21 +872,30 @@
 
     function renderSidebar() {
       var c  = costs();
+      var roofSub = c.shingle + c.under + c.vent;
+      var eaveSub = c.eaveBase + c.caps;
       var sl = { standard:'Low ×1.2', steep:'Medium ×1.4', verySteep:'Steep ×1.5' };
       var tl = { good:'Standard 30-yr', better:'Premium 40-yr', best:'Deluxe 50-yr' };
       var vl = { standard:'Standard (incl.)', tower:'Tower ×'+S.ventQty };
       var ul = { standard:'Standard barrier', ice:'Ice & water barrier', full:'Full coverage' };
 
-      var html =
+      var html = '';
+      if (S.eave) html += '<div class="cline csect"><span>Roof Replacement</span></div>';
+      html +=
         '<div class="cline"><span class="cl">Roof area (' + sl[S.slopeGroup] + ')</span><span class="cv">' + c.a.toLocaleString() + ' ft²</span></div>' +
         '<div class="cline"><span class="cl">Shingles (' + tl[S.tier] + ')</span><span class="cv">' + $$(c.shingle) + '</span></div>' +
         '<div class="cline"><span class="cl">Underlayment (' + ul[S.underlayment] + ')</span><span class="cv">' + (c.under > 0 ? '+'+$$(c.under) : 'Included') + '</span></div>' +
         '<div class="cline"><span class="cl">Ventilation (' + vl[S.ventType] + ')</span><span class="cv">' + (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>';
       if (S.eave) {
+        html += '<div class="cline csubt"><span>Subtotal</span><span class="cv">' + $$(roofSub) + '</span></div>';
+        html += '<div class="cline csect"><span>Eavestrough &amp; Downpipes</span></div>';
         html += '<div class="cline"><span class="cl">Eavestroughs &amp; downspouts</span><span class="cv">' + $$(c.eaveBase) + '</span></div>';
         if (S.addCaps) html += '<div class="cline"><span class="cl">Leaf guard caps</span><span class="cv">+' + $$(c.caps) + '</span></div>';
+        html += '<div class="cline csubt"><span>Subtotal</span><span class="cv">' + $$(eaveSub) + '</span></div>';
+        html += '<div class="cline ctotal"><span>Combined Total</span><span class="cv">' + $$(c.total) + '</span></div>';
+      } else {
+        html += '<div class="cline ctotal"><span>Total Estimate</span><span class="cv">' + $$(c.total) + '</span></div>';
       }
-      html += '<div class="cline ctotal"><span>Total Estimate</span><span class="cv">' + $$(c.total) + '</span></div>';
 
       document.getElementById('sb-lines').innerHTML = html;
       document.getElementById('sb-addr').textContent  = S.address;
@@ -1351,31 +1364,82 @@
     ══════════════════════════════════════════════════════════════════ */
     function buildSummary() {
       var c = costs();
-      document.getElementById('sum-name').textContent  = S.name;
-      document.getElementById('sum-addr').textContent  = S.address;
-      document.getElementById('sum-total').textContent = $$(c.total);
-      document.getElementById('sum-lo').textContent    = $$(c.total * 0.85);
-      document.getElementById('sum-hi').textContent    = $$(c.total * 1.15);
+      var roofSub = c.shingle + c.under + c.vent;
+      var eaveSub = c.eaveBase + c.caps;
+
+      document.getElementById('sum-name').textContent = S.name;
+      document.getElementById('sum-addr').textContent = S.address;
 
       var sl = { standard:'Low slope ×1.2 (0°–30°)', steep:'Medium slope ×1.4 (31°–40°)', verySteep:'Steep slope ×1.5 (41°+)' };
       var tl = { good:'Standard — 30-yr Architectural (IKO / BP)', better:'Premium — 40-yr Dimensional (GAF / Owens Corning)', best:'Deluxe — 50-yr Premium (CertainTeed / GAF HDZ)' };
       var vl = { standard:'Standard box vents (included)', tower:'Tower vents &times;'+S.ventQty };
-      document.getElementById('sum-breakdown').innerHTML =
-        '<div class="brow bhdr"><span>Item</span><span>Cost</span></div>' +
+      var ul = { standard:'Standard 3-ft perimeter (code min.)', ice:'Ice & water barrier 3-ft perimeter', full:'Full roof coverage' };
+
+      // ── Total box(es) ──────────────────────────────────────────────────────
+      var totalsHtml;
+      if (S.eave) {
+        totalsHtml =
+          '<div class="row">' +
+            '<div class="col-sm-6">' +
+              '<div class="sum-total-box">' +
+                '<div class="st-lbl">Roof Replacement</div>' +
+                '<div class="st-amt">' + $$(roofSub) + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="col-sm-6">' +
+              '<div class="sum-total-box stb-eave">' +
+                '<div class="st-lbl">Eavestrough &amp; Downpipes</div>' +
+                '<div class="st-amt">' + $$(eaveSub) + '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="sum-combined">' +
+            '<div><div class="sc-lbl">Combined Total Estimate</div><div style="font-size:11px;opacity:.6;">±15% variance</div></div>' +
+            '<div class="sc-amt">' + $$(c.total) + '</div>' +
+          '</div>';
+      } else {
+        totalsHtml =
+          '<div class="sum-total-box">' +
+            '<div class="st-lbl">Estimated Project Cost</div>' +
+            '<div class="st-amt">' + $$(c.total) + '</div>' +
+            '<div class="st-lbl">Range: ' + $$(c.total * 0.85) + ' &ndash; ' + $$(c.total * 1.15) + '</div>' +
+          '</div>';
+      }
+      document.getElementById('sum-totals').innerHTML = totalsHtml;
+
+      // ── Roof breakdown ─────────────────────────────────────────────────────
+      var roofBreakdown =
+        '<div class="brow bhdr"><span>Roof Replacement</span><span>Cost</span></div>' +
         '<div class="brow"><span>Shingles &amp; Labour<br><small style="color:#999;">' +
           c.a.toLocaleString() + ' sq ft &bull; ' + sl[S.slopeGroup] + ' &bull; ' + S.homeType +
         '</small></span><span class="bv">' + $$(c.shingle) + '</span></div>' +
         '<div class="brow"><span>' + tl[S.tier] + '</span><span class="bv">Included</span></div>' +
-        '<div class="brow"><span>Underlayment<br><small style="color:#999;">' +
-          ({ standard:'Standard 3-ft perimeter (code min.)', ice:'Ice & water barrier 3-ft perimeter', full:'Full roof coverage' }[S.underlayment]) +
+        '<div class="brow"><span>Underlayment<br><small style="color:#999;">' + ul[S.underlayment] +
         '</small></span><span class="bv">' + (c.under > 0 ? '+'+$$(c.under) : 'Included') + '</span></div>' +
         '<div class="brow"><span>Ventilation<br><small style="color:#999;">' + vl[S.ventType] + '</small></span><span class="bv">' +
-          (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>' +
-        (S.eave ? '<div class="brow"><span>Eavestroughs &amp; Downspouts<br><small style="color:#999;">' +
-          c.pm + ' ft perimeter + ' + c.ds + ' ft downspouts &times; $8/ft' +
-          (S.perimeterFt ? ' <span style="color:#28a745;font-size:10px;font-weight:600;">&#10003; from building outline</span>' : ' (estimated)') +
-          '</small></span><span class="bv">' + $$(c.eaveBase) + '</span></div>' +
-          (S.addCaps ? '<div class="brow"><span>Leaf Guard Caps<br><small style="color:#999;">' + c.pm + ' ft &times; $5/ft</small></span><span class="bv">+' + $$(c.caps) + '</span></div>' : '') : '');
+          (c.vent > 0 ? $$(c.vent) : 'Included') + '</span></div>';
+      if (S.eave) {
+        roofBreakdown += '<div class="brow" style="background:#fafafa;font-weight:700;"><span>Roof Subtotal</span><span class="bv">' + $$(roofSub) + '</span></div>';
+      }
+
+      // ── Eavestrough breakdown ──────────────────────────────────────────────
+      var eaveBreakdown = '';
+      if (S.eave) {
+        var perimNote = S.perimeterFt ? ' <span style="color:#28a745;font-size:10px;font-weight:600;">&#10003; from building outline</span>' : ' (estimated)';
+        eaveBreakdown =
+          '<div class="sum-breakdown mt-3">' +
+          '<div class="brow bhdr"><span>Eavestrough &amp; Downpipes</span><span>Cost</span></div>' +
+          '<div class="brow"><span>Linear footage<br><small style="color:#999;">' +
+            c.pm + ' ft perimeter' + perimNote + ' + ' + c.ds + ' ft downspouts' +
+          '</small></span><span class="bv">' + (c.pm + c.ds) + ' ft</span></div>' +
+          '<div class="brow"><span>Installation ($8/ft)</span><span class="bv">' + $$(c.eaveBase) + '</span></div>' +
+          (S.addCaps ? '<div class="brow"><span>Leaf Guard Caps<br><small style="color:#999;">' + c.pm + ' ft &times; $5/ft</small></span><span class="bv">+' + $$(c.caps) + '</span></div>' : '') +
+          '<div class="brow" style="background:#fafafa;font-weight:700;"><span>Eavestrough Subtotal</span><span class="bv">' + $$(eaveSub) + '</span></div>' +
+          '</div>';
+      }
+
+      document.getElementById('sum-breakdown').innerHTML = roofBreakdown;
+      document.getElementById('sum-eave-breakdown').innerHTML = eaveBreakdown;
 
       renderSidebar();
     }
